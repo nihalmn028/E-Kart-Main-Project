@@ -1,0 +1,53 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.sidebar {
+  position: fixed;
+  margin-top: 102px;
+  top: 0;
+  right: -300px; 
+  width: 300px;
+  height: 100%;
+  background-color: black;
+  border: 2px solid orange;
+  transition: right 0.3s ease; 
+  z-index: 1;
+}
+.sidebaropen{
+  position: fixed;
+  margin-top: 102px;
+  top: 0;
+  right: 0;
+  right:0; 
+  width: 300px;
+  height: 100%;
+  background-color: black;
+  border: 2px solid orange;
+  transition: right 0.3s ease; 
+  z-index: 1;
+}
+.usermenu{
+  color: white;
+  display: flex;
+  font-weight: bold;
+  font-size: 20px;
+   gap: 10px;
+    align-items: center;
+    padding-left: 10px;
+    
+}
+.pdtt{
+  padding: 10px;
+}
+.usermenu:hover{
+  border: 2px solid orange;
+cursor: pointer;
+}
+
+.mgtop{
+  margin-top: 10px;
+}
+

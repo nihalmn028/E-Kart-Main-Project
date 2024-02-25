@@ -1,0 +1,64 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.updpdcrmain{
+  border: 1px  solid orange;
+  width: fit-content;
+  padding: 30px;
+  padding-top: 20px;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+.updpdcrlabell{
+  margin-top: 60px;
+  position: relative;
+}
+.updpdcrlab{
+  font-weight: bold;
+  font-size: 18px;
+}
+.updpdcrtitle{
+  color: orange;
+  width: fit-content;
+  margin: auto;
+}
+.updpdcrninput{
+  border: none;
+  outline: none;
+  padding-top: 10px;
+  padding-bottom: 9px;
+  margin-top: 5px;
+  font-size: 18px;
+  border-bottom: 2px solid orange;
+  width: 360px;
+}
+.updpdcrbtn{
+  color: white;
+  font-size: 20px;
+  padding: 2px;
+  width: 100%;
+  margin-top: 40px;
+  border: none;
+  background-color: orange;
+  font-weight: bold;
+  border-radius: 10px;
+}
+.updpdcrmgtop{
+  position: relative;
+
+  margin-top: 40px;
+}
+.updqnnum::-webkit-inner-spin-button{
+  appearance: none;
+}
+.updcategoryprdt{
+  outline: none;
+  border: 2px solid orange;
+  padding-bottom: 2px;
+  padding-left: 3px;
+}
