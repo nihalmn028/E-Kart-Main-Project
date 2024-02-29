@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom'
@@ -34,10 +34,33 @@ const [file, setFile] = useState([])
     price:"",
     category:""
   })
+  useEffect(() => {
+    const numberInput = document.getElementById('numberInput');
+    const numberInput1 = document.getElementById('numberInput1');
+
+    if (numberInput || numberInput1) {
+      const preventWheel = (e) => e.preventDefault();
+      numberInput.addEventListener('wheel', preventWheel, { passive: false });
+      numberInput1.addEventListener('wheel', preventWheel, { passive: false });
+
+
+      return () => {
+        numberInput.removeEventListener('wheel', preventWheel);
+        numberInput1.removeEventListener('wheel', preventWheel);
+
+      };
+    }
+
+
+  }, []);
   function handleChange(event){
     const {name,value}=event.target
     setInput({...input,[name]:value})
+
+
     
+    
+
    
    
   }
@@ -62,12 +85,20 @@ const [file, setFile] = useState([])
         setData({...data,price:"Enter the price"})
         ref2.current.style.borderBottom= "3px solid red";
       }
+      else if(input.price<0 ){
+        setData({...data,price:"Enter the correct price"})
+        ref2.current.style.borderBottom= "3px solid red";
+      }
       else if(input.description===""){
         setData({...data,description:"Enter the description"})
         ref3.current.style.borderBottom= "3px solid red";
       }
       else if(input.quantity===""){
         setData({...data,quantity:"Enter the quantity"})
+        ref4.current.style.borderBottom= "3px solid red";
+      }
+      else if(input.quantity<0){
+        setData({...data,quantity:"Enter the correct quantity"})
         ref4.current.style.borderBottom= "3px solid red";
       }
      else{
@@ -185,7 +216,7 @@ const handleFileChange = (event) => {
       
 <div className='pdcrmgtop'>
       <label className='pdcrlab ' htmlFor="">Product Price</label><br />
-<input ref={ref2} name='price' value={input.price} className='pdcrninput qnnum' type="number" placeholder='Enter Product Price' onChange={handleChange}/>
+<input id='numberInput1' ref={ref2} name='price' value={input.price} className='pdcrninput qnnum' type="number" placeholder='Enter Product Price' onChange={handleChange}/>
 <p  style={{color:"red",position:"absolute",top:"85px",fontWeight:"normal"}}>{data.price}</p>
 
 
@@ -198,7 +229,7 @@ const handleFileChange = (event) => {
       </div>
       <div className='pdcrmgtop'>
       <label className='pdcrlab ' htmlFor="">Product Quantity</label><br />
-<input ref={ref4} name='quantity' value={input.quantity} className='pdcrninput qnnum' type="number" placeholder='Enter Product Quantity' onChange={handleChange}/>
+<input id='numberInput' ref={ref4} name='quantity' value={input.quantity} className='pdcrninput qnnum' type="number" placeholder='Enter Product Quantity' onChange={handleChange}/>
 <p  style={{color:"red",position:"absolute",top:"85px",fontWeight:"normal"}}>{data.quantity}</p>
 
       </div>

@@ -2,7 +2,7 @@ const express=require('express')
 // const multer = require('multer');
 // const path=require('path')
 const router=express.Router()
- const {addtoCart,allCarts,deleteCart}=require('../Controllers/cartmanagecontrol')
+ const {addtoCart,allCarts,deleteCart,checkoutadd,checkoutView}=require('../Controllers/cartmanagecontrol')
 //  const storage = multer.diskStorage({
 //   destination: (req, file, cb)=> {
 //     cb(null, 'public/images'); // Save uploaded files to the 'uploads' directory
@@ -18,6 +18,9 @@ const router=express.Router()
 router.post('/addtocart',addtoCart)
 router.get('/allcarts/:id',allCarts)
 router.post('/deletecart',deleteCart)
+router.post('/checkoutadd',checkoutadd)
+router.get('/checkoutview/:id',checkoutView)
+
 
 
 

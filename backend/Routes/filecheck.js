@@ -7,7 +7,7 @@ const imageschema=require('../Models/imageschema')
 const storage = multer.diskStorage({
   destination: (req, file, cb)=> {
     cb(null, 'public/images'); // Save uploaded files to the 'uploads' directory
-  },
+  }, 
   filename:  (req, file, cb)=> {
     cb(null, file.fieldname + "_" + Date.now()  + path.extname(file.originalname)) // Use a unique filename
   }

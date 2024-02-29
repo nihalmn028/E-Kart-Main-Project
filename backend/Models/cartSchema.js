@@ -1,7 +1,12 @@
 const mongoose=require('mongoose')
 const cartSchema=mongoose.Schema({
   productid:{
-    type:String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'productSchema', 
+    required:true,
+  },
+  selectedquantity:{
+    type:Number,
     required:true,
   },
   userid:{

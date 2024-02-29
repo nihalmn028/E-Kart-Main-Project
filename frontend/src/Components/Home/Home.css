@@ -286,3 +286,13 @@ gap: 40px;}
   margin-top: 20px;
 
 }
+.stockavlhome{
+  color: green;
+  font-size: 18px;
+  font-weight: 600;
+}
+.stocknoavlhome{
+  color: red;
+  font-size: 18px;
+  font-weight: 600;
+}

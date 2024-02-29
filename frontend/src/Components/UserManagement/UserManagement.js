@@ -15,7 +15,10 @@ function UserManagement() {
   const [data, setData] = useState([])
   useEffect(() => {
     axios.get("/usermanagement/getusers").then((res)=>{
-      setData(res.data)
+      const reversedData = res.data.reverse();
+            
+            // Set the reversed data in the state
+            setData(reversedData);
           })
           .catch(()=>{
       console.log("error");

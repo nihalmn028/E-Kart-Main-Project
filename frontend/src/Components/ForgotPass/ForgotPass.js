@@ -27,7 +27,9 @@ setInput(event.target.value)
       ref.current.style.border= "2px solid orange";
       axios.post("/forgotpass/emailverify",{email:input}).then((res)=>{
         if(input==res.data.fgemail){
+        localStorage.setItem('otptoken',res.data.token)
         localStorage.setItem('fgemail',res.data.fgemail)
+
         toast.success('otp send successfully');
         setTimeout(() => {
           navigate('/otp')

@@ -20,15 +20,12 @@ setSearch(event.target.value)
     navigate('/')
   }
   function searchclick(){
-axios.get('/productmanagement/search/'+search).then((res)=>{
-setSearch("")
-const arr=JSON.stringify(res.data)
-localStorage.setItem('searchid',arr)
 
+
+localStorage.setItem('search',search)
+setSearch("")
   navigate('/searchproduct')
-}).catch((err)=>{
-console.log(err);
-})
+
 
   }
   function loginoutbtn(event) 

@@ -122,13 +122,15 @@ function AllProducts() {
                 <i className="fa-solid fa-star" style={{ color: "orange" }}></i>
               </div>
               <h5>{data.price}</h5>
+              <p className={data.quantity>0 ?"stockavlallp" :"stocknoavlallp" }>{data.quantity>0 ?"In stock" :"Out Of Stock"}</p>
+
             </div>
           ))}
         </div>
       </div>
       <nav style={{margin:"auto",width:"fit-content"}}>
         <ul className='pagination' >
-          <li className='page-item'style={{border:"2px solid orange",color:"black",borderRight:'none'}}>
+          <li className='page-item'style={{border:"2px solid orange",color:"black",}}>
             <button onClick={prevPage} className='page-link' style={{color:"black",fontWeight:"bold"}}>Previous</button>
           </li>
           {Array.from({ length: Math.ceil(data.length / itemsPerPage) }, (_, i) => (
@@ -138,7 +140,7 @@ function AllProducts() {
               </button>
             </li>
           ))}
-          <li className='page-item' style={{border:"2px solid orange",color:"black",borderLeft:'none'}}>
+          <li className='page-item' style={{border:"2px solid orange",color:"black",}}>
             <button onClick={nextPage} className='page-link' style={{color:"black",fontWeight:"bold"}}>Next</button>
           </li>
         </ul>

@@ -12,7 +12,11 @@ function ProductManagement(props) {
   const navigate=useNavigate()
   useEffect(() => {
     axios.get('/productmanagement/getproducts').then((res)=>{
-    setData(res.data)
+    
+      const reversedData = res.data.reverse();
+            
+            // Set the reversed data in the state
+            setData(reversedData);
     }).catch(()=>{
     console.log("error");
     })
@@ -28,7 +32,16 @@ setSelectedProductId(data);
             axios.delete("/productmanagement/deleteproduct/"+SelectedProductId).then((res)=>{
               localStorage.removeItem('pid');
             console.log("success");
-            setData(prevData => prevData.filter(user => user._id !== SelectedProductId));
+            // setData(prevData => prevData.filter(user => user._id !== SelectedProductId));
+            axios.get('/productmanagement/getproducts')
+          .then((res) => {
+           
+            setData(res.data);
+          })
+          .catch(() => {
+            console.log("error fetching updated products");
+          });
+
             })  
               .catch(() => {
                 // toast.success("error")
@@ -49,6 +62,7 @@ setSelectedProductId(data);
   }
   function addprdbtn(){
     navigate('/addproduct');
+
   }
   
   
@@ -73,6 +87,7 @@ setSelectedProductId(data);
 
 
 </div>
+{ data.length==0?<h3>no products</h3>:<div>
 {data.map((data,index)=>{
   return(
 <div style={{display:"flex",flexWrap:"wrap",gap:"12px"}}>
@@ -83,9 +98,9 @@ setSelectedProductId(data);
 </div> */}
 {/* <p className='pdid ' key={index}> {data._id} </p> */}
 
-<p className='pdname'>{data.productname}</p>
-<p className='pdqn' >{data.quantity}</p>
-<p className='pdprice '> {data.price} </p>
+<p key={index} className='pdname'>{data.productname}</p>
+<p key={index} className='pdqn' >{data.quantity}</p>
+<p key={index} className='pdprice '> {data.price} </p>
 
 
 
@@ -98,6 +113,7 @@ setSelectedProductId(data);
 </div>
   )
 })}
+</div>}
 
 
 

@@ -8,12 +8,14 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function Sidebar(props) {
   const navigate=useNavigate()
+  
   function userprofileclk(){
     const userId=localStorage.getItem('userId')
     if (userId){
 navigate('/userprofile')
   }
   else{
+    toast.dismiss()
     toast.error("please login first")
   }
 }
@@ -23,6 +25,8 @@ function cartpage(){
 navigate('/allcarts')
   }
   else{
+    toast.dismiss()
+
     toast.error("please login first")
   }
 }

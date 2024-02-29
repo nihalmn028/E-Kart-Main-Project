@@ -53,3 +53,13 @@ gap: 40px;}
   margin-top: 20px;
 
 }
+.stockavlallp{
+  color: green;
+  font-size: 18px;
+  font-weight: 600;
+}
+.stocknoavlallp{
+  color: red;
+  font-size: 18px;
+  font-weight: 600;
+}

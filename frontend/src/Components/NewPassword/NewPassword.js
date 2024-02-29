@@ -52,6 +52,7 @@ if(input.password===""){
     if(res.data.fgemail==fgemail){
     toast.success("Password Changed Successfully");
     localStorage.removeItem('fgemail');
+    localStorage.removeItem('otptoken');
 
     localStorage.removeItem('token');
      setTimeout(() => {

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import '../SignUp/SignUp.css'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -28,6 +28,17 @@ const [input, setInput] = useState({
   name:"",
   number:""
 })
+useEffect(() => {
+  const numberInput = document.getElementById('numberInput');
+  if (numberInput) {
+    const preventWheel = (e) => e.preventDefault();
+    numberInput.addEventListener('wheel', preventWheel, { passive: false });
+
+    return () => {
+      numberInput.removeEventListener('wheel', preventWheel);
+    };
+  }
+}, []);
 function handleChange(event){
   const {name,value}=event.target
   setInput({...input,[name]:value})
@@ -41,6 +52,10 @@ ref4.current.style.borderBottom= "3px solid red";
 }
 else if(input.number===""){
   setData({...data,number:"Enter the Phone Number"})
+ref5.current.style.borderBottom= "3px solid red";
+}
+else if(input.number<0){
+  setData({...data,number:"Enter the correct Phone Number"})
 ref5.current.style.borderBottom= "3px solid red";
 }
  else if(input.username===""){
@@ -103,7 +118,7 @@ setTimeout(() => {
 
 </div>
 <div className='texticondiv'>
-  <input ref={ref5} type="number" placeholder='Phone Number' name='number' value={input.number} className='signupusername btnremo' onChange={handleChange}/><i class="fa-solid fa-phone"></i><br />
+  <input id='numberInput' ref={ref5} type="number" placeholder='Phone Number' name='number' value={input.number} className='signupusername btnremo' onChange={handleChange}/><i class="fa-solid fa-phone"></i><br />
   <p  style={{color:"red",position:"absolute",top:"85px",fontWeight:"normal"}}>{data.number}</p>
 
 </div>
@@ -115,7 +130,7 @@ setTimeout(() => {
 
 <div className='texticondiv'>
   
-  <input ref={ref2} type="email" placeholder='Email' name='email' value={input.email} className='signupusername ' onChange={handleChange}/><i class="fa-solid fa-envelope"></i><br />
+  <input ref={ref2} type="email" placeholder='Email' name='email' value={input.email} className='signupusername '  onChange={handleChange}/><i class="fa-solid fa-envelope"></i><br />
   <p  style={{color:"red",position:"absolute",top:"85px",fontWeight:"normal"}}>{data.email}</p>
 
   </div>

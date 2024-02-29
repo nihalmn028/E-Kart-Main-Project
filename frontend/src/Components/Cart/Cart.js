@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import axios from '../../Axios/Axios';
 import '../Cart/Cart.css';
 import { useNavigate } from 'react-router-dom';
@@ -7,6 +7,7 @@ import Confirmation from '../Confirmation/Confirmation';
 
 function Cart() {
   const [selectedQuantity, setSelectedQuantity] = useState([]);
+  
   const [data, setData] = useState([]);
   const [qnt, setQnt] = useState([]);
   const [conf, setConf] = useState(false);
@@ -19,7 +20,9 @@ function Cart() {
     const userId = localStorage.getItem('userId');
     axios.get('/cartmanage/allcarts/' + userId)
       .then((res) => {
-        setData(res.data);
+        
+        const reversedData = res.data.reverse();
+        setData(reversedData);
         const options = res.data.map(item => {
           const itemOptions = [];
           for (let i = 1; i <= item.quantity; i++) {
@@ -29,7 +32,7 @@ function Cart() {
         });
         
         setQnt(options);
-        const defaultQuantity = res.data.map(() => 1);
+        const defaultQuantity = res.data.map((item) =>item.quantity>item.selectedquantity?item.selectedquantity:item.quantity);
         setSelectedQuantity(defaultQuantity);
         const totalPrice = res.data.reduce((acc, item, index) => {
           return acc + (item.price * defaultQuantity[index]);
@@ -85,9 +88,29 @@ function Cart() {
     }
     setConf(false);
   }
-  function checkoutclk(){
-    navigate('/checkout')
+  function checkoutclk() {
+    const userid = localStorage.getItem('userId');
+
+    // Create an array to hold the selected product details
+    const selectedProducts = data.map((item, index) => ({
+      productName: item.productname,
+      productid:item.productid,
+      price: item.price,
+      image:item.image,
+      quantity: selectedQuantity[index],
+    }));
+  // console.log(selectedProducts);
+    // Send the selected products array to the server
+    axios.post('/cartmanage/checkoutadd', { selectedProducts,userid })
+      .then((res) => {
+        // If the server successfully processes the request, navigate to the checkout page
+        navigate('/checkout');
+      })
+      .catch((error) => {
+        console.error("Error during checkout:", error);
+      });
   }
+  
   
   return (
     <div>
@@ -98,8 +121,9 @@ function Cart() {
         <h1>Shopping Cart</h1>
         {data.map((data, index) => {
           return (
-            <div style={{ display: "flex", gap: "20px", alignItems: "center" }} key={index}>
-              <div className='cartmaindiv'>
+            <div style={{position:"relative"}}>
+            <div  style={{ display: "flex", gap: "20px", alignItems: "center", }} key={index}>
+              <div className={data.quantity==0?'cartmaindivmain':'cartmaindiv'}>
                 <img src={'http://localhost:3001/images/' + data.image} alt="" onClick={() => {
                   localStorage.setItem('spid', data.productid)
                   navigate('/singleproduct')
@@ -117,6 +141,9 @@ function Cart() {
               </div>
               <i className="fa-solid fa-trash fa-xl" onClick={() => handleclkdlt(data.productid, data.userid)}></i>
             </div>
+                       {data.quantity==0? <h2 style={{position:'absolute',top:'110px',left:'20px',color:'red',opacity:1}}>Out Of Stock</h2>:""}
+                       </div>
+
           )
         })}
        

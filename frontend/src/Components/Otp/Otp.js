@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import '../Otp/Otp.css'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -9,6 +9,17 @@ function Otp() {
   const ref =useRef()
   const [input, setInput] = useState("")
   const [data, setData] = useState("")
+  useEffect(() => {
+    const numberInput = document.getElementById('numberInput');
+    if (numberInput) {
+      const preventWheel = (e) => e.preventDefault();
+      numberInput.addEventListener('wheel', preventWheel, { passive: false });
+
+      return () => {
+        numberInput.removeEventListener('wheel', preventWheel);
+      };
+    }
+  }, []);
   function handliclk(){
     if(input===""){
       setData("Enter the otp")
@@ -19,6 +30,7 @@ function Otp() {
       setInput("")
       ref.current.style.border= "2px solid orange";
       const fgemail=localStorage.getItem('fgemail')
+
       
       axios.post("/forgotpass/otpverify",{otp:input, fgemail:fgemail}).then((res)=>{
         if(res.data.fgemail==fgemail){
@@ -50,7 +62,7 @@ function Otp() {
 <h1  className="otplogoforgot">OTP Verification</h1>
 <p className="otpforgotdes">Enter the OTP that has been send to your Email.</p>
 <label htmlFor="">OTP</label>
-<input ref={ref} type="number" value={input} onChange={(event)=>setInput(event.target.value)} placeholder='Enter your OTP'/>
+<input id='numberInput' ref={ref} type="number" value={input} onChange={(event)=>setInput(event.target.value)} placeholder='Enter your OTP'/>
 <p style={{color:"red"}}>{data}</p>
 
 <button onClick={handliclk}>Continue</button>

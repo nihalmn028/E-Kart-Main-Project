@@ -14,11 +14,11 @@ if (!passCheck) {
   return res.status(401).json({message:"error"})
 }
 if(user.isadmin==true){
-  const token=jwt.sign({userId:user._id},process.env.SECRET_KEY,{expiresIn:"1h"})
+  const token=jwt.sign({userId:user._id},process.env.SECRET_KEY,{expiresIn:"7d"})
 res.status(200).json({admin:true,token:token,userId:user._id})
 }
 else{
-const token=jwt.sign({userId:user._id},process.env.SECRET_KEY,{expiresIn:"1h"})
+const token=jwt.sign({userId:user._id},process.env.SECRET_KEY,{expiresIn:"7d"})
 res.status(200).json({admin:false,token:token,userId:user._id})
 }}
 

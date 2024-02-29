@@ -52,7 +52,7 @@ console.log("error");
       </div>
       <div className='secondmainhome'>
       <div className='mainallprodhome'>
-
+{data.length==0?<h1>No products</h1>:
 <div className='mainallprodflxhome'>
       {currentItems.map((data,index)=>{
   return(
@@ -67,12 +67,13 @@ console.log("error");
               <i class="fa-solid fa-star" style={{ color: "orange" }}></i>
               <i class="fa-solid fa-star" style={{ color: "orange" }}></i></div>
 <h5 key={index}>{data.price}</h5>
+<p className={data.quantity>0 ?"stockavlhome" :"stocknoavlhome" }>{data.quantity>0 ?"In stock" :"Out Of Stock"}</p>
 
 </div>
 
   )
 })}
- </div>
+ </div>}
 
 
 </div>
@@ -239,7 +240,7 @@ console.log("error");
 
            <nav style={{margin:"auto",width:"fit-content"}}>
         <ul className='pagination' >
-          <li className='page-item'style={{border:"2px solid orange",color:"black",borderRight:'none'}}>
+          <li className='page-item'style={{border:"2px solid orange",color:"black",}}>
             <button onClick={prevPage} className='page-link' style={{color:"black",fontWeight:"bold"}}>Previous</button>
           </li>
           {Array.from({ length: Math.ceil(data.length / itemsPerPage) }, (_, i) => (
@@ -249,7 +250,7 @@ console.log("error");
               </button>
             </li>
           ))}
-          <li className='page-item' style={{border:"2px solid orange",color:"black",borderLeft:'none'}}>
+          <li className='page-item' style={{border:"2px solid orange",color:"black",}}>
             <button onClick={nextPage} className='page-link' style={{color:"black",fontWeight:"bold"}}>Next</button>
           </li>
         </ul>

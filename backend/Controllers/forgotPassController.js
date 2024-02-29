@@ -1,5 +1,7 @@
 const userschema=require('../Models/userCollections')
 const nodemailer=require('nodemailer')
+const jwt=require('jsonwebtoken')
+
 require('dotenv')
 const bcrypt=require('bcrypt')
 const emailVerify=async(req,res)=>{
@@ -9,6 +11,7 @@ if(!user)
  return res.status(401).json({message:"User not found"})
  const otp=Math.floor(1000+ Math.random()*9000);
   await userschema.findByIdAndUpdate({_id:user._id},{otp},{new:true})
+  const token=jwt.sign({emailId:user.email},process.env.SECRET_KEY2,{expiresIn:"7d"})
   const transporter = await nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -33,7 +36,7 @@ if(!user)
    
   
   });
-  res.status(200).json({message:"User found",fgemail:user.email})
+  res.status(200).json({message:"User found",token:token,fgemail:user.email});
 
 }
 const otpverify=async (req,res)=>{

@@ -5,7 +5,9 @@ import '../SingleProduct/SingleProduct.css'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from '../../Axios/Axios'
+import { useNavigate } from 'react-router-dom';
 function SingleProduct() {
+  const navigate=useNavigate()
   const [data, setData] = useState("")
   const [curdata, setCurData] = useState("")
   const [qnt, setQnt] = useState([])
@@ -44,16 +46,24 @@ console.log(res.data);
   function addtocartclick(){
     const userId=localStorage.getItem('userId')
     const spid=localStorage.getItem('spid')
-
     if(userId){
-    axios.post("/cartmanage/addtocart",{userId,spid}).then((res)=>{
-      if(res.data.message=="exist")
-      return  toast.success("Item already in the cart")
-
+    axios.post("/cartmanage/addtocart",{userId,spid,quantity:selectedQuantity}).then((res)=>{
+     if(res.data.message=="success"){
+      toast.dismiss()
       toast.success("Item added to cart")
+     }
+     else if(res.data.message=="exist"){
+      toast.dismiss()
+      toast.success("Item already in the cart")
+     }
+     else{
+      toast.dismiss()
+      toast.error("error")
+     }
 
     }).catch((error)=>{
       console.log(error);
+      toast.dismiss()
     })
     }
     else{
@@ -63,6 +73,11 @@ console.log(res.data);
   }
   function handleQuantityChange(event) {
     setSelectedQuantity(parseInt(event.target.value)); // Update selected quantity
+  }
+  function buynowbtn(e){
+e.preventDefault()
+
+navigate('/allcarts')
   }
   return (
     <div>
@@ -127,7 +142,7 @@ console.log(res.data);
 
 </select>
 </div>:""}
-{data.quantity>0 ?<div className='btnflexsing'><button className='buynowbtnpr'>Buy Now</button><button className='buynowbtnpr'onClick={addtocartclick}>Add To Cart</button></div> :""} 
+{data.quantity>0 ?<div className='btnflexsing'><button className='buynowbtnpr' onClick={buynowbtn}>Buy Now</button><button className='buynowbtnpr'onClick={addtocartclick}>Add To Cart</button></div> :""} 
   </div>
       </div>
     <ToastContainer/>

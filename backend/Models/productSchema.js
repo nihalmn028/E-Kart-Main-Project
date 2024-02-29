@@ -5,8 +5,12 @@ const productSchema=mongoose.Schema({
     required:true,
     unique:true
   },
+  // userid:{
+  //   type:String,
+    
+  // },
   image1:{
-    type:String,
+    type:String, 
     required:true,
   },
   image2:{

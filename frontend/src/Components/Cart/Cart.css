@@ -13,12 +13,24 @@
   margin-top: 40px;
   border-bottom: 2px solid orange;
   margin-left: 40px;
+  opacity: 1;
 }
 .mainalldiv{
   opacity: 1;
 }
 .mainalldivaf{
   opacity: .3;
+}
+.cartmaindivmain{
+ opacity: .4;
+ display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  width: fit-content;
+  padding: 10px;
+  margin-top: 40px;
+  border-bottom: 2px solid orange;
+  margin-left: 40px;
 }
 /* .cartmaindiv:hover{
   cursor: pointer;
@@ -27,7 +39,16 @@
   width: 160px;
   height:160px;
 }
+.cartmaindivmain img{
+  width: 160px;
+  height:160px;
+}
 .cartmaindiv img:hover{
+  cursor: pointer;
+  scale: 1.02;
+
+}
+.cartmaindivmain img:hover{
   cursor: pointer;
   scale: 1.02;
 
