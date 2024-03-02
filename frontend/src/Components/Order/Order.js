@@ -87,7 +87,7 @@ function confirmbtn(){
         <h3>x{data.quantity}</h3>
         </div>
         <div className='orderaddress'>
-        <h3>delvery address</h3>
+        <h3>delivery address</h3>
         <p>{data.name} <br />{data.number}  <br />{data.email}  <br />{data.address} <br /> {data.city} <br />{data.pin}</p>
       {data.status=="Delivered"?"":<button onClick={()=>cancelbtn(data.productid,data.userid)}>Cancel Order</button>}  
         </div>

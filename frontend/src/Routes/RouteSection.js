@@ -22,6 +22,8 @@ import CheckoutPage from '../Pages/CheckoutPage/CheckoutPage'
 import OrderPage from '../Pages/OrderPage/OrderPage'
 import OrderManagementPage from '../Pages/OrderManagementPage/OrderManagementPage'
 import PlaceOrderPage from '../Pages/PlaceOrderPage/PlaceOrderPage'
+import AboutusPage from '../Pages/AboutusPage/AboutusPage'
+import ContactUsPage from '../Pages/ContactUsPage/ContactUsPage'
 
 function RouteSection() {
   return (
@@ -48,6 +50,8 @@ function RouteSection() {
          <Route path='/orders' element={<OrderPage/>}></Route>
          <Route path='/ordermanagement' element={<OrderManagementPage/>}></Route>
          <Route path='/orderplace' element={<PlaceOrderPage/>}></Route>
+         <Route path='/aboutus' element={<AboutusPage/>}></Route>
+         <Route path='/contactus' element={<ContactUsPage/>}></Route>
 
 
           <Route path='/404' element={<ErrorPage />}></Route>

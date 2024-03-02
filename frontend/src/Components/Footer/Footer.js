@@ -1,6 +1,6 @@
 import React, {  useEffect, useRef, useState } from 'react'
 import '../Footer/Footer.css'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 function Footer() {
@@ -8,6 +8,7 @@ function Footer() {
 
   })
   const ref=useRef()
+  const navigate=useNavigate()
   const [input, setInput] = useState("")
   const [data, setData] = useState("")
   function btclkk(e){
@@ -67,11 +68,11 @@ function Footer() {
         </div>
         <div className='homeflexx'>
        <Link style={{textDecoration:"none",color:"white"}} to={'/'}><span>HOME</span></Link>   
-          <span>ABOUT</span>
+          <span onClick={()=>navigate('/aboutus')}>ABOUT</span>
 
-          <span>CONTACT US</span>
+          <span  onClick={()=>navigate('/contactus')}>CONTACT US</span>
 
-          <span>OUR TEAM</span>
+          {/* <span>OUR TEAM</span> */}
 
 
         </div>
