@@ -1,3 +1,4 @@
+require('dotenv')
 const cartSchema=require('../Models/cartSchema')
 const checkoutschema = require('../Models/checkoutschema')
 const productSchema=require('../Models/productSchema')
@@ -64,12 +65,13 @@ const checkoutadd = async (req, res) => {
   try {
     const selectedProducts = req.body.selectedProducts;
     const userid = req.body.userid;
+    const total=req.body.total;
 
     // Use map to create an array of promises for updating or adding products to checkout schema
     const savePromises = selectedProducts.map(async (product) => {
       const filter = {
         productid: product.productid,
-        userid: userid
+        userid: userid,
       };
 
       const update = {
@@ -78,7 +80,7 @@ const checkoutadd = async (req, res) => {
         quantity: product.quantity,
         image: product.image,
         productid: product.productid,
-        userid: userid
+        userid: userid,
       };
 
       // Use findOneAndUpdate with upsert option to update or insert based on the filter
@@ -138,4 +140,13 @@ catch(error){
 
 }
 }
-module.exports={addtoCart,allCarts,deleteCart,checkoutadd,checkoutView}
+const couponControl=(req,res)=>{
+const {coupon}=req.body
+if(coupon==process.env.COUPON){
+res.status(200).json({success:true})
+}
+else{
+  res.status(401).json({success:false})
+}
+}
+module.exports={addtoCart,couponControl,allCarts,deleteCart,checkoutadd,checkoutView}

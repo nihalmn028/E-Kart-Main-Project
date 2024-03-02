@@ -4,6 +4,10 @@ const checkoutschema=mongoose.Schema({
     type:String,
     required:true,
   },
+  total:{
+    type:Number,
+
+  },
   productid:{
     type:String,
     required:true,

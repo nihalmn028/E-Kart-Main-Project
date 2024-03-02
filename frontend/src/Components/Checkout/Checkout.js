@@ -10,6 +10,8 @@ const [data1, setData1] = useState([])
 const [key, setKey] = useState("")
 const [datas, setDatas] = useState()
 const [subtotal, setSubtotal] = useState(0)
+const [orderid, setOrderid] = useState("")
+
   useEffect(() => {
     const userid=localStorage.getItem('userId')
     axios.get('/cartmanage/checkoutview/'+userid)
@@ -90,7 +92,10 @@ const [subtotal, setSubtotal] = useState(0)
     setData({...data,number:"Enter the Phone Number"})
   ref5.current.style.borderBottom= "3px solid red";
   }
-
+  else if(input.number<0){
+    setData({...data,number:"Enter the correct Phone Number"})
+  ref5.current.style.borderBottom= "3px solid red";
+  }
       else if(input.email===""){
         setData({...data,email:"Enter the email"})
         ref2.current.style.borderBottom= "3px solid red";
@@ -107,6 +112,10 @@ const [subtotal, setSubtotal] = useState(0)
         setData({...data,pin:"Enter the Pincode"})
       ref7.current.style.borderBottom= "3px solid red";
       }
+      else if(input.pin<0){
+        setData({...data,pin:"Enter the correct Pincode"})
+      ref7.current.style.borderBottom= "3px solid red";
+      }
      else{
       setInput({...input,address:"",email:"",number:"",name:"",city:"",pin:""})
       setData({...data,address:"",email:"",number:"",name:"",city:"",pin:""})
@@ -120,10 +129,43 @@ const [subtotal, setSubtotal] = useState(0)
 
       axios.get('/checkout/getkey').then((res)=>{
         setKey(res.data.key);
-      axios.post('/checkout/payment', {
+      
+       }).catch(()=>{
+        console.log("error");
+       })
+       axios.post('/checkout/payment', {
         amount:(subtotal+60)*100
       }).then((res)=>{
+        const orderId = res.data.id;
+        localStorage.setItem('orderid',orderId) // Capture the order ID
+        setOrderid(orderId);
+        const userid = localStorage.getItem('userId');
+        const selectedProducts = data1.map((item, index) => ({
+          productName: item.productname,
+          productid: item.productid,
+          price: item.price,
+          image: item.image,
+          quantity: item.quantity,
+        }));
       
+        // Now, proceed with the addorder API call
+        axios.post('/ordermanage/addorder', {
+          selectedProducts,
+          userid,
+          orderid: orderId, // Use the captured order ID here
+          email: input.email,
+          address: input.address,
+          name: input.name,
+          city: input.city,
+          number: input.number,
+          pin: input.pin
+        }).then((res) => {
+      
+          // Handle the response as needed
+        }).catch(() => {
+          console.log("Error in addorder API");
+        });
+
       var options = {
         key,
         amount: res.data.amount,
@@ -147,13 +189,12 @@ const [subtotal, setSubtotal] = useState(0)
       };
       var razor = new window.Razorpay(options);
       razor.open();
+
+      
       }).catch(()=>{
         console.log("error");
        })
-       }).catch(()=>{
-        console.log("error");
-       })
-
+      
   }
 
 

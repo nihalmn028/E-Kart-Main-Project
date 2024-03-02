@@ -16,6 +16,8 @@ const dbConnection=require('./DbConnection/dbConnection')
 const tokenValidate=require('./Routes/tokenValidation')
 const otpValidate=require('./Routes/otpvalidate')
 const payment=require('./Routes/payment')
+const orderManage=require('./Routes/orderManage')
+
 
 const forgotPass=require('./Routes/forgotPass')
 const filecheck=require('./Routes/filecheck')
@@ -36,6 +38,7 @@ app.use('/',loginRouter)
 app.use('/',tokenValidate)
 app.use('/',otpValidate)
 app.use('/checkout',payment) 
+app.use('/ordermanage',orderManage) 
 
 app.use('/',ProductCreation)
 app.use('/userprofile',userprofile)

@@ -19,6 +19,9 @@ import ProductUpdatePage from '../Pages/ProductUpdatePage/ProductUpdatePage'
 import Searchproductpage from '../Pages/Searchproductpage/Searchproductpage'
 import CartPage from '../Pages/Cartpage/CartPage'
 import CheckoutPage from '../Pages/CheckoutPage/CheckoutPage'
+import OrderPage from '../Pages/OrderPage/OrderPage'
+import OrderManagementPage from '../Pages/OrderManagementPage/OrderManagementPage'
+import PlaceOrderPage from '../Pages/PlaceOrderPage/PlaceOrderPage'
 
 function RouteSection() {
   return (
@@ -42,6 +45,9 @@ function RouteSection() {
          <Route path='/searchproduct' element={<Searchproductpage/>}></Route>
          <Route path='/allcarts' element={<CartPage/>}></Route>
          <Route path='/checkout' element={<CheckoutPage/>}></Route>
+         <Route path='/orders' element={<OrderPage/>}></Route>
+         <Route path='/ordermanagement' element={<OrderManagementPage/>}></Route>
+         <Route path='/orderplace' element={<PlaceOrderPage/>}></Route>
 
 
           <Route path='/404' element={<ErrorPage />}></Route>

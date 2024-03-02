@@ -40,6 +40,8 @@ setSearch("")
 
       localStorage.removeItem('token')
       localStorage.removeItem('userId')
+      localStorage.removeItem('orderid')
+
       const isadminn = localStorage.getItem('admin')
       if (isadminn) {
 

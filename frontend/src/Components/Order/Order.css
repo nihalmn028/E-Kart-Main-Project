@@ -1,0 +1,76 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.ordermainn{
+  padding: 20px;
+}
+.ordermainn h1{
+margin-top: 20px;
+margin-left: 40px;
+margin-bottom: 60px;
+}
+.ordersectionn{
+  border: 1px solid rgba(0, 0, 0, 0.119);
+  background-color: rgb(247, 247, 247);
+}
+.ordersecttop{
+padding: 20px;
+border: 1px solid rgba(0, 0, 0, 0.119);
+background-color: rgb(218, 218, 218);
+
+}
+.ordersectopflex{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  
+}
+.ordersectbottom{
+  padding: 20px;
+}
+.imageorderflex{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 100px;
+}
+.imageorderflex img{
+  width: 80px;
+  height: 80px;
+}
+.imageorderflex img:hover{
+  cursor: pointer;
+  scale: 1.03;
+}
+.orderaddress{
+  margin-top: 40px;
+}
+.orderaddress p{
+  margin-top: 20px;
+}
+.orderaddress button{
+border: 1px solid rgba(0, 0, 0, 0.409);
+padding: 5px 10px 5px 10px;
+border-radius: 5px;
+margin-top: 20px;
+}
+.buynowbtnprcartorder{
+  border: none;
+  background-color: orange;
+  padding-left: 23px;
+  padding-right: 23px;
+  padding-top: 12px;
+  padding-bottom: 11px;
+  border-radius: 50px;
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
+  width: fit-content;
+  margin: auto;
+  display: block;
+  margin-bottom: 40px;
+}

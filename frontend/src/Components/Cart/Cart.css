@@ -112,7 +112,25 @@ border: none;
 }
 .totagrpcart{
   width: fit-content;
-  margin-top: 20px;
+  /* margin-top: 20px;
   margin-left: 790px;
-  margin-bottom: 20px;
+  margin-bottom: 20px; */
 }
+.coupentext{
+  outline: none;
+  background-color: white;
+  border: 2px solid orange;
+  padding: 5px 5px 5px 10px;
+  font-size: 18px;
+  border-radius: 50px;
+}
+.checkoutbtncart2{
+  padding-top: 6px;
+padding-bottom: 9px;
+padding-left: 20px;
+padding-right: 20px;
+color: white;
+background-color: orange!important;
+border-radius: 50px;
+font-weight: bold;
+border: none;}

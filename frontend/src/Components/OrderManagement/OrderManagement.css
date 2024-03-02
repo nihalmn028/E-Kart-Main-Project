@@ -1,0 +1,113 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+font-family: Arial, Helvetica, sans-serif;}
+.orderusermaindivproduct{
+padding: 10px;
+margin: auto;
+width: fit-content;
+margin-top: 40px;
+opacity: 1;
+}
+.orderopahlf{
+  
+    padding: 10px;
+    margin: auto;
+    width: fit-content;
+    margin-top: 40px;
+    opacity: .3;
+}
+.orderuserheading{
+  display: flex;
+  flex-wrap: wrap;
+  width: fit-content;
+  border-bottom: 2px solid orange;
+padding-bottom: 10px;
+align-items: center;
+}
+.orderuserheadprodusername{
+ width: 270px;
+}
+.orderuserheadqua{
+  width: 270px;
+}
+.orderuserheadpr{
+  width: 270px;
+}
+.orderuseraddsec{
+  font-size: 35px;
+  
+}
+.orderuserheadprod{
+  width: 270px;
+}
+.orderuseraddsec:hover{
+  cursor: pointer;
+}
+.orderuserheadpri{
+  margin-left: 60px;
+}
+
+.orderuserproductss{
+  display: flex;
+  flex-wrap: wrap;
+
+  border-bottom: 1px solid orange;
+  width: 800;
+align-items: center ;
+}
+/* .orderuserproductss:hover{
+background-color: rgba(255, 166, 0, 0.279);
+cursor: pointer;
+scale: 1.01;
+transition: .2s;} */
+.orderuserproductss i:hover{
+  cursor: pointer;
+}
+.orderuserflexicnsss{
+  display: flex;
+  flex-wrap: wrap;
+
+  align-items: center;
+}
+
+.orderuserpdimg{
+  width: 80px;
+  height: 80px;
+}
+.orderuserpdname{
+  font-size: 16px;
+  font-weight: bold;
+  width: 270px;
+  margin-top: 13px;
+  overflow-y: hidden;
+}
+.orderuserpphno{
+  font-size: 16px;
+  font-weight: bold;
+  width: 200px;
+  margin-top: 14px;
+}
+.orderuserpdqn{
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 10px;
+  width: 270px;
+}
+
+.orderuserpdprice{
+font-weight: bold;
+font-size: 16px;
+margin-top: 13px;
+  width: 270px;
+}
+.orderuserflexicnsss select{
+  border: 2px solid orange;
+  padding: 1px 4px 4px 4px;
+  font-size: 16px;
+ font-weight: 600;
+}
+.orderuserflexicnsss select{
+  outline: none;
+}

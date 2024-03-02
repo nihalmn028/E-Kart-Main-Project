@@ -17,7 +17,7 @@ function Dashboard(props) {
 </div>
 <div className='dashsect' onClick={()=>navigate('/productmanagement')}>Product Management
 </div>
-<div className='dashsect'>Order Management
+<div className='dashsect' onClick={()=>navigate('/ordermanagement')}>Order Management
 </div>
 
 

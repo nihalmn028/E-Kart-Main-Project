@@ -1,13 +1,19 @@
 
 import React, { useEffect, useRef, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import axios from '../../Axios/Axios';
 import '../Cart/Cart.css';
+
 import { useNavigate } from 'react-router-dom';
 import Confirmation from '../Confirmation/Confirmation';
 
 function Cart() {
   const [selectedQuantity, setSelectedQuantity] = useState([]);
-  
+  const ref=useRef()
+  const [coupon,setCoupon]=useState("");
+  const [coupon1,setCoupon1]=useState("");
+
   const [data, setData] = useState([]);
   const [qnt, setQnt] = useState([]);
   const [conf, setConf] = useState(false);
@@ -69,16 +75,13 @@ function Cart() {
         .then((res) => {
           localStorage.removeItem('pid');
           console.log("success");
-          // Remove the deleted product from the data state
           setData(prevData => prevData.filter(user => user.productid !== SelectedProductId));
           
-          // Recalculate total price after removing the product
           const totalPriceAfterDeletion = data.reduce((acc, item, idx) => {
             if (item.productid !== SelectedProductId) {
-              // Add the price of products that are not deleted
               return acc + (item.price * selectedQuantity[idx]);
             }
-            return acc; // Skip the deleted product
+            return acc; 
           }, 0);
           setTotalPrice(totalPriceAfterDeletion);
         })
@@ -91,7 +94,6 @@ function Cart() {
   function checkoutclk() {
     const userid = localStorage.getItem('userId');
 
-    // Create an array to hold the selected product details
     const selectedProducts = data.map((item, index) => ({
       productName: item.productname,
       productid:item.productid,
@@ -99,11 +101,9 @@ function Cart() {
       image:item.image,
       quantity: selectedQuantity[index],
     }));
-  // console.log(selectedProducts);
-    // Send the selected products array to the server
-    axios.post('/cartmanage/checkoutadd', { selectedProducts,userid })
+
+    axios.post('/cartmanage/checkoutadd', { selectedProducts,userid,total:totalPrice })
       .then((res) => {
-        // If the server successfully processes the request, navigate to the checkout page
         navigate('/checkout');
       })
       .catch((error) => {
@@ -111,14 +111,40 @@ function Cart() {
       });
   }
   
-  
+  function couponclk(){
+if(coupon==""){
+setCoupon1("Enter the Coupon Code")
+ref.current.style.border="3px solid red"
+}
+
+else{
+  axios.post('/cartmanage/coupon',{coupon}).then((res)=>{
+setTotalPrice(totalPrice-1000)
+setCoupon1("")
+setCoupon("")
+
+ref.current.style.border="2px solid orange"
+
+
+  }).catch((err)=>{
+   
+
+    
+    setCoupon1("Enter valid coupon")
+    setCoupon("")
+    
+    ref.current.style.border="2px solid red"
+    console.log(err);
+  })
+}
+  }
   return (
     <div>
       { data.length==0?<div><h1 style={{margin:"auto",width:"fit-content",marginTop:"40px"}}>Your  cart is empty!</h1><br/>
       <button className='buynowbtnprcart' onClick={()=>navigate('/')}>Buy Now</button>
       </div>:
       <div className={conf ? 'mainalldivaf' : 'mainalldiv'}>
-        <h1>Shopping Cart</h1>
+        <h1 style={{marginLeft:"20px",marginTop:"20px"}}>Shopping Cart</h1>
         {data.map((data, index) => {
           return (
             <div style={{position:"relative"}}>
@@ -146,17 +172,29 @@ function Cart() {
 
           )
         })}
-       
-        <div className='totagrpcart'>
-          <div className='totalcart'>
-            <h2>Total</h2>
-            <h3>₹{totalPrice}</h3>
-          </div>
-          <button className='checkoutbtncart' onClick={checkoutclk}>Checkout</button>
+       <div style={{display:"flex",alignItems:"center",gap:"440px",marginTop:"20px",marginLeft:"40px",marginBottom:"30px"}}>
+        <div   style={{display:"flex",alignItems:"center",gap:'20px',position:'relative'}}>
+          <input ref={ref} className='coupentext' type="text" value={coupon} placeholder='Enter Coupon Code' onChange={(event)=>setCoupon(event.target.value)}/>
+<button className='checkoutbtncart2' onClick={couponclk}>Apply</button>
+<p style={{position:"absolute",top:"43px",left:"10px",color:"red"}}>{coupon1}</p>
         </div>
+        <div className='totagrpcart'>
+        
+        <div className='totalcart'>
+          
+          <h2>Total</h2>
+          <h3>₹{totalPrice}</h3>
+        </div>
+        <button className='checkoutbtncart' onClick={checkoutclk}>Checkout</button>
+      </div>
+       </div>
+      
       </div>}
+    
       <Confirmation conf={conf} onConfirm={handleDeleteConfirmation} onCancel={() => setConf(false)} />
+      <ToastContainer/>
     </div>
+      
   )
 }
 

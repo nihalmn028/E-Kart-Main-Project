@@ -4,10 +4,31 @@ const orderSchema=mongoose.Schema({
     type:String,
     required:true,
   },
-  selectedquantity:{
-    type:Number,
-    required:true,
+  orderid: {
+    type: String,
+    // required: true,
   },
+  total:{
+    type:Number,
+  
+  },
+  paymentid: {
+    type: String,
+    
+  },
+  status: {
+    type: String,
+    default:"processing"
+  },
+  order: {
+    type: Boolean,
+    default:false
+  },
+  signature: {
+    type: String,
+    
+  },
+
   userid:{
     type:String,
     required:true,
@@ -32,7 +53,7 @@ const orderSchema=mongoose.Schema({
     type:String,
     required:true,
   },
-  phone:{
+  number:{
     type:Number,
     required:true,
   },
