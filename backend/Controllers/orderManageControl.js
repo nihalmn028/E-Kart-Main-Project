@@ -1,6 +1,51 @@
 const orderSchema=require('../Models/orderSchema')
 const paymentSchema=require('../Models/paymentSchema')
 
+// const orderManageControl = async (req, res) => {
+//   try {
+//     const selectedProducts = req.body.selectedProducts;
+//     const userid = req.body.userid;
+//     const orderid = req.body.orderid;
+//     const name = req.body.name;
+//     const email = req.body.email;
+//     const address = req.body.address;
+//     const pin = req.body.pin;
+//     const city = req.body.city;
+//     const number = req.body.number;
+//     const coupon=req.body.coupon
+
+//     // Use map to create an array of promises for adding new products to order schema
+//     const savePromises = selectedProducts.map(async (product) => {
+//       const newOrder = {
+//         productname: product.productName,
+//         price: product.price,
+//         quantity: product.quantity,
+//         image: product.image,
+//         productid: product.productid,
+//         userid: userid,
+//         orderid: orderid,
+//         name,
+//         email,
+//         address,
+//         pin,
+//         city,
+//         number,
+//         coupon
+//       };
+
+//       // Use orderSchema.create to add a new document to the collection
+//       await orderSchema.create(newOrder);
+//     });
+
+//     // Wait for all promises to resolve
+//     await Promise.all(savePromises);
+
+//     res.status(200).json({ message: 'Checkout successful' });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: 'Internal server error' });
+//   }
+// };
 const orderManageControl = async (req, res) => {
   try {
     const selectedProducts = req.body.selectedProducts;
@@ -12,31 +57,28 @@ const orderManageControl = async (req, res) => {
     const pin = req.body.pin;
     const city = req.body.city;
     const number = req.body.number;
+    const coupon = req.body.coupon;
 
-    // Use map to create an array of promises for adding new products to order schema
-    const savePromises = selectedProducts.map(async (product) => {
-      const newOrder = {
+    const newOrder = {
+      userid,
+      orderid,
+      name,
+      email,
+      address,
+      pin,
+      city,
+      number,
+      coupon,
+      products: selectedProducts.map(product => ({
         productname: product.productName,
-        price: product.price,
-        quantity: product.quantity,
-        image: product.image,
         productid: product.productid,
-        userid: userid,
-        orderid: orderid,
-        name,
-        email,
-        address,
-        pin,
-        city,
-        number
-      };
+        quantity: product.quantity,
+        price: product.price,
+        image: product.image,
+      })),
+    };
 
-      // Use orderSchema.create to add a new document to the collection
-      await orderSchema.create(newOrder);
-    });
-
-    // Wait for all promises to resolve
-    await Promise.all(savePromises);
+    await orderSchema.create(newOrder);
 
     res.status(200).json({ message: 'Checkout successful' });
   } catch (error) {
@@ -88,9 +130,9 @@ res.status(200).json(order);
 
 }
 const statusChangeControl= async (req,res)=> {
-  const {userid,status,productid}=req.body;
+  const {userid,status,orderid}=req.body;
   try {
-    const order=await orderSchema.findOne({userid,productid,order:true});
+    const order=await orderSchema.findOne({userid,orderid,order:true});
   
     if (!order)
     return     res.status(401).json({ message: 'Internal server error' });
@@ -102,9 +144,9 @@ const statusChangeControl= async (req,res)=> {
   }
 }
 const cancelOrderControl=async (req,res)=>{
-  const {userid,productid}=req.body;
+  const {userid,orderid}=req.body;
   try {
-    const order=await orderSchema.findOne({userid,productid,order:true});
+    const order=await orderSchema.findOne({userid,orderid,order:true});
     if (!order)
     return     res.status(401).json({ message: 'Internal server error' });
     await orderSchema.findOneAndDelete({_id:order._id})

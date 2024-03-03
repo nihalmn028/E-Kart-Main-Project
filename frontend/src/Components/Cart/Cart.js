@@ -11,7 +11,9 @@ import Confirmation from '../Confirmation/Confirmation';
 function Cart() {
   const [selectedQuantity, setSelectedQuantity] = useState([]);
   const ref=useRef()
-  const [coupon,setCoupon]=useState("");
+  const [coupon,setCoupon]=useState(false);
+  const [coupon2,setCoupon2]=useState("");
+
   const [coupon1,setCoupon1]=useState("");
 
   const [data, setData] = useState([]);
@@ -100,9 +102,11 @@ function Cart() {
       price: item.price,
       image:item.image,
       quantity: selectedQuantity[index],
+      coupon,
+      userid
     }));
 
-    axios.post('/cartmanage/checkoutadd', { selectedProducts,userid,total:totalPrice })
+    axios.post('/cartmanage/checkoutadd', { selectedProducts})
       .then((res) => {
         navigate('/checkout');
       })
@@ -112,16 +116,17 @@ function Cart() {
   }
   
   function couponclk(){
-if(coupon==""){
+if(coupon2==""){
 setCoupon1("Enter the Coupon Code")
 ref.current.style.border="3px solid red"
 }
 
 else{
-  axios.post('/cartmanage/coupon',{coupon}).then((res)=>{
+  axios.post('/cartmanage/coupon',{coupon2}).then((res)=>{
 setTotalPrice(totalPrice-1000)
+setCoupon(true)
 setCoupon1("")
-setCoupon("")
+setCoupon2("")
 
 ref.current.style.border="2px solid orange"
 
@@ -131,7 +136,7 @@ ref.current.style.border="2px solid orange"
 
     
     setCoupon1("Enter valid coupon")
-    setCoupon("")
+    setCoupon2("")
     
     ref.current.style.border="2px solid red"
     console.log(err);
@@ -172,17 +177,21 @@ ref.current.style.border="2px solid orange"
 
           )
         })}
-       <div style={{display:"flex",alignItems:"center",gap:"440px",marginTop:"20px",marginLeft:"40px",marginBottom:"30px"}}>
+       <div style={{display:"flex",alignItems:"center",gap:"400px",marginTop:"20px",marginLeft:"40px",marginBottom:"30px"}}>
         <div   style={{display:"flex",alignItems:"center",gap:'20px',position:'relative'}}>
-          <input ref={ref} className='coupentext' type="text" value={coupon} placeholder='Enter Coupon Code' onChange={(event)=>setCoupon(event.target.value)}/>
+          <input ref={ref} className='coupentext' type="text" value={coupon2} placeholder='Enter Coupon Code' onChange={(event)=>setCoupon2(event.target.value)}/>
 <button className='checkoutbtncart2' onClick={couponclk}>Apply</button>
 <p style={{position:"absolute",top:"43px",left:"10px",color:"red"}}>{coupon1}</p>
         </div>
         <div className='totagrpcart'>
-        
-        <div className='totalcart'>
+        {coupon?<div className='totalcart'>
           
-          <h2>Total</h2>
+          <h3 style={{width:"130px"}}>Coupon:</h3>
+          <h3>-₹1000</h3>
+        </div>:""}
+        <div className='totalcart' >
+          
+          <h2 style={{width:"140px"}}>Total:</h2>
           <h3>₹{totalPrice}</h3>
         </div>
         <button className='checkoutbtncart' onClick={checkoutclk}>Checkout</button>

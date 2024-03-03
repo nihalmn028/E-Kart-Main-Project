@@ -11,6 +11,8 @@ const [key, setKey] = useState("")
 const [datas, setDatas] = useState()
 const [subtotal, setSubtotal] = useState(0)
 const [orderid, setOrderid] = useState("")
+const [coupon, setCoupon] = useState(false)
+
 
   useEffect(() => {
     const userid=localStorage.getItem('userId')
@@ -18,6 +20,7 @@ const [orderid, setOrderid] = useState("")
       .then((res) => {
         const revdata=res.data.reverse()
         setData1(revdata);
+        setCoupon(res.data[0].coupon)
         const total = revdata.reduce((acc, item) => {
           return acc + (item.price * item.quantity);
         }, 0);
@@ -133,8 +136,12 @@ const [orderid, setOrderid] = useState("")
        }).catch(()=>{
         console.log("error");
        })
+       if(coupon) 
+      var  amount=(subtotal+60-1000)*100
+       else
+       amount=(subtotal+60)*100
        axios.post('/checkout/payment', {
-        amount:(subtotal+60)*100
+     amount:amount
       }).then((res)=>{
         const orderId = res.data.id;
         localStorage.setItem('orderid',orderId) // Capture the order ID
@@ -158,7 +165,8 @@ const [orderid, setOrderid] = useState("")
           name: input.name,
           city: input.city,
           number: input.number,
-          pin: input.pin
+          pin: input.pin,
+          coupon
         }).then((res) => {
       
           // Handle the response as needed
@@ -265,7 +273,7 @@ const [orderid, setOrderid] = useState("")
    <div className='checkprices'>
    <div style={{display:"flex",marginTop:"30px"}}><h4 style={{width:"170px"}}>Sub total:</h4><h4>₹{subtotal}</h4></div>
    <div style={{display:"flex"}}><h4 style={{width:"170px"}}>Shipping fee:</h4><h4>₹60</h4></div>
-   <div style={{display:"flex"}}><h4 style={{width:"170px"}}>Total:</h4><h4>₹{subtotal+60}</h4></div>
+   <div style={{display:"flex"}}><h4 style={{width:"170px"}}>Total:</h4>{coupon?<h4>₹{subtotal+60-1000}</h4>:<h4>₹{subtotal+60}</h4>}</div>
    <button className='checkoutsignupbutton' onClick={handleClickproceed} >Procceed</button>
 
    </div>

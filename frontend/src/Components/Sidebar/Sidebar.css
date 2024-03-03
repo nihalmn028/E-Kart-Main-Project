@@ -14,7 +14,7 @@
   background-color: black;
   border: 2px solid orange;
   transition: right 0.3s ease; 
-  z-index: 1;
+  z-index: 2;
 }
 .sidebaropen{
   position: fixed;
@@ -27,7 +27,7 @@
   background-color: black;
   border: 2px solid orange;
   transition: right 0.3s ease; 
-  z-index: 1;
+  z-index: 2;
 }
 .usermenu{
   color: white;

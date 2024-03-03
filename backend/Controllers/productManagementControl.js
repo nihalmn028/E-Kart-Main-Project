@@ -12,7 +12,15 @@ catch{
   return res.status(401).json({message:"Error in Fetching"})
 }
 }
-
+const getProductavailable=async (req,res)=>{
+  try{
+    const products=await productSchema.find({quantity:{$gt:0}})
+  if(!products) return res.status(401).json({message:"Error in Fetching"})
+    res.status(200).json(products);}
+  catch{
+    return res.status(401).json({message:"Error in Fetching"})
+  }
+  }
 const deleteProduct=async (req,res)=> {
   const id=req.params.id
 
@@ -130,4 +138,4 @@ const searchProduct= async (req,res)=>{
 }
 }
 
-module.exports={getProducts,deleteProduct,updateProduct,allProducts,singleProduct,viewProduct,searchProduct}
+module.exports={getProducts,deleteProduct,getProductavailable,updateProduct,allProducts,singleProduct,viewProduct,searchProduct}

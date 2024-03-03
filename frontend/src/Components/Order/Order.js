@@ -9,38 +9,39 @@ import { useNavigate } from 'react-router-dom'
 function Order() {
   const [show, setShow] = useState(false);
   const [userid, setUserid] = useState("");
-  const [productid, setProductid] = useState("");
+  const [orderid, setOrderid] = useState("");
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const navigate=useNavigate()
   const [data, setData] = useState([])
+  const [data1, setData1] = useState([])
+
+
   useEffect(() => {
     const userid=localStorage.getItem('userId')
  axios.post('/ordermanage/orderslist',{userid}).then((res)=>{
   const reversedData = res.data.reverse();
             
-  // Set the reversed data in the state
   setData(reversedData);
+  console.log(data1);
  }).catch((err)=>{
   console.log(err);
  })
     
   }, [])
-  function cancelbtn(productid,userid){
+  function cancelbtn(orderid,userid){
 
     setUserid(userid)
-    setProductid(productid)
+    setOrderid(orderid)
 handleShow()
   }
 function confirmbtn(){
-  axios.post('/ordermanage/cancelorder',{userid,productid}).then((res)=>{
+  axios.post('/ordermanage/cancelorder',{userid,orderid}).then((res)=>{
     handleClose()
-    toast.success("Your order has been cancelled")
     axios.post('/ordermanage/orderslist',{userid}).then((res)=>{
       const reversedData = res.data.reverse();
                 
-      // Set the reversed data in the state
       setData(reversedData);
      }).catch((err)=>{
       console.log(err);
@@ -57,39 +58,47 @@ function confirmbtn(){
       <div className='ordermainn'>
       <h1>Your Orders</h1>
    {data.map((data,index)=>{
+     const totalPrice = data.products.reduce((sum, product) => sum + product.quantity * product.price, 0);
       return (
         <div key={index} className='ordersectionn'>
         <div className='ordersecttop'>
           <div className='ordersectopflex'>
             <div style={{display:"flex",alignItems:"center",flexWrap:"wrap",gap: "200px"}}>
             <div className='ordersectopflexsect'>
-            <h3>order Status</h3> 
+            <h3>Order Status</h3> 
           <h4>{data.status}</h4>
             </div>
             <div className='ordersectopflexsect'>
-            <h3>Price</h3> 
-          <h4>₹{data.quantity*data.price} </h4>
+            <h3>Total Price</h3> 
+        {data.coupon?  <h4>₹{totalPrice+60-1000} </h4>:<h4>₹{totalPrice+60} </h4>}
             </div>
             </div>
             
             <div className='ordersectopflexsect'>
-            <h3 >orderid </h3> 
+            <h3 >Order Id </h3> 
           <h4>{data.orderid}</h4>
             </div>
           </div>
         </div>
         <div className='ordersectbottom'>
-        <div className='imageorderflex'>
-        <img src={'http://localhost:3001/images/'+ data.image} alt="" onClick={() => {
-                  localStorage.setItem('spid',data.productid)
+          { data.products.map((data2, index2) => (
+            
+        <div key={index2} className='imageorderflex'>
+        <img src={'http://localhost:3001/images/'+ data2.image} alt="" onClick={() => {
+                  localStorage.setItem('spid',data2.productid)
                   navigate('/singleproduct')}}/>
-        <h3>{data.productname}</h3> 
-        <h3>x{data.quantity}</h3>
-        </div>
+        <h3 style={{width:"150px"}}>{data2.productname}</h3> 
+        <h3 style={{width:"30px"}}>x{data2.quantity}</h3>
+        <h3>₹{data2.price*data2.quantity}</h3>
+
+        </div> ))}
+        <div style={{display:"flex",alignItems:"center",marginLeft:"360px",marginTop:"20px"}}>        <h4 style={{width:"190px"}}>Shipping Fee: </h4><h4>+₹60</h4>
+</div>   { data.coupon? <div style={{display:"flex",alignItems:"center",marginLeft:"360px",marginTop:"10px"}}>        <h4 style={{width:"190px"}}>Discount: </h4><h4>-₹1000</h4>
+</div>:""}
         <div className='orderaddress'>
         <h3>delivery address</h3>
         <p>{data.name} <br />{data.number}  <br />{data.email}  <br />{data.address} <br /> {data.city} <br />{data.pin}</p>
-      {data.status=="Delivered"?"":<button onClick={()=>cancelbtn(data.productid,data.userid)}>Cancel Order</button>}  
+      {data.status=="Delivered"?"":<button onClick={()=>cancelbtn(data.orderid,data.userid)}>Cancel Order</button>}  
         </div>
         <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>

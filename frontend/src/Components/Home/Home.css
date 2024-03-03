@@ -41,11 +41,15 @@
   margin-top: 30px;
 }
 .homerighsec{
-  background-image: url(homeImages/bannerhome.avif);
+  /* background-image: url(homeImages/bannerhome.avif);
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: cover; */
   width: 500px;
   height: 500px;
+}
+.homerighsec img{
+  width: 100%;
+  height: 100%;
 }
 .popflexdiv{
   display: flex;

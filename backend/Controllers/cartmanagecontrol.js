@@ -64,14 +64,12 @@ const allCarts=async (req,res)=>{
 const checkoutadd = async (req, res) => {
   try {
     const selectedProducts = req.body.selectedProducts;
-    const userid = req.body.userid;
-    const total=req.body.total;
 
     // Use map to create an array of promises for updating or adding products to checkout schema
     const savePromises = selectedProducts.map(async (product) => {
       const filter = {
         productid: product.productid,
-        userid: userid,
+        
       };
 
       const update = {
@@ -80,7 +78,8 @@ const checkoutadd = async (req, res) => {
         quantity: product.quantity,
         image: product.image,
         productid: product.productid,
-        userid: userid,
+        coupon: product.coupon,
+        userid:product.userid
       };
 
       // Use findOneAndUpdate with upsert option to update or insert based on the filter
@@ -122,7 +121,7 @@ res.status(200).json({message:"Product Deleted Successfully"})
 catch(error){
    res.status(401).json({message:"error"})
   //  console.log(error);
-
+ 
 }
 }
 const checkoutView=async (req,res)=> {
@@ -141,8 +140,8 @@ catch(error){
 }
 }
 const couponControl=(req,res)=>{
-const {coupon}=req.body
-if(coupon==process.env.COUPON){
+const {coupon2}=req.body
+if(coupon2==process.env.COUPON){
 res.status(200).json({success:true})
 }
 else{

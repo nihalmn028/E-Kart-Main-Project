@@ -1,80 +1,155 @@
-const mongoose=require('mongoose')
-const orderSchema=mongoose.Schema({
-  productid:{
-    type:String,
-    required:true,
+// const mongoose=require('mongoose')
+// const orderSchema=mongoose.Schema({
+//   productid:{
+//     type:String,
+//     required:true,
+//   },
+//   orderid: {
+//     type: String,
+//     // required: true,
+//   },
+//   coupon:{
+//     type:Boolean,
+//     default:false
+  
+//   },
+//   paymentid: {
+//     type: String,
+    
+//   },
+//   status: {
+//     type: String,
+//     default:"Processing"
+//   },
+//   order: {
+//     type: Boolean,
+//     default:false
+//   },
+//   signature: {
+//     type: String,
+    
+//   },
+
+//   userid:{
+//     type:String,
+//     required:true,
+//   },
+//   productname:{
+//     type:String,
+//     required:true,
+//   },
+//   price:{
+//     type:Number,
+//     required:true,
+//   },
+//   image:{
+//     type:String,
+//     required:true,
+//   },
+//   quantity:{
+//     type:Number,
+//     required:true,
+//   },
+//   name:{
+//     type:String,
+//     required:true,
+//   },
+//   number:{
+//     type:Number,
+//     required:true,
+//   },
+//   address:{
+//     type:String,
+//     required:true,
+//   },
+//   city:{
+//     type:String,
+//     required:true,
+//   },
+//   pin:{
+//     type:Number,
+//     required:true,
+//   },
+//   email:{
+//     type:String,
+//     required:true,
+//   },
+
+// })
+
+
+// module.exports=mongoose.model("orderSchema",orderSchema)
+const mongoose = require('mongoose');
+
+const orderSchema = mongoose.Schema({
+  userid: {
+    type: String,
+    required: true,
   },
   orderid: {
     type: String,
-    // required: true,
+    required: true,
   },
-  total:{
-    type:Number,
-  
-  },
-  paymentid: {
+    order: {
+       type: Boolean,
+        default:false,
+    },
+       status: {
+     type: String,
+    default:"Processing"
+ },
+  name: {
     type: String,
-    
+    required: true,
   },
-  status: {
+  email: {
     type: String,
-    default:"processing"
+    required: true,
   },
-  order: {
+  address: {
+    type: String,
+    required: true,
+  },
+  pin: {
+    type: Number,
+    required: true,
+  },
+  city: {
+    type: String,
+    required: true,
+  },
+  number: {
+    type: Number,
+    required: true,
+  },
+  coupon: {
     type: Boolean,
-    default:false
+    default: false,
   },
-  signature: {
-    type: String,
-    
-  },
+  products: [
+    {
+      productname: {
+        type: String,
+        required: true,
+      },
+      productid: {
+        type: String,
+        required: true,
+      },
+      quantity: {
+        type: Number,
+        required: true,
+      },
+      price: {
+        type: Number,
+        required: true,
+      },
+      image: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
+});
 
-  userid:{
-    type:String,
-    required:true,
-  },
-  productname:{
-    type:String,
-    required:true,
-  },
-  price:{
-    type:Number,
-    required:true,
-  },
-  image:{
-    type:String,
-    required:true,
-  },
-  quantity:{
-    type:Number,
-    required:true,
-  },
-  name:{
-    type:String,
-    required:true,
-  },
-  number:{
-    type:Number,
-    required:true,
-  },
-  address:{
-    type:String,
-    required:true,
-  },
-  city:{
-    type:String,
-    required:true,
-  },
-  pin:{
-    type:Number,
-    required:true,
-  },
-  email:{
-    type:String,
-    required:true,
-  },
-
-})
-
-
-module.exports=mongoose.model("orderSchema",orderSchema)
+module.exports = mongoose.model("orderSchema", orderSchema);

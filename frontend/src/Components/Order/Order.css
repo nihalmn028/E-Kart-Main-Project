@@ -36,7 +36,8 @@ background-color: rgb(218, 218, 218);
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 100px;
+  gap:100px;
+  margin-bottom: 30px;
 }
 .imageorderflex img{
   width: 80px;

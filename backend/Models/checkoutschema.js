@@ -4,8 +4,9 @@ const checkoutschema=mongoose.Schema({
     type:String,
     required:true,
   },
-  total:{
-    type:Number,
+  coupon:{
+    type:Boolean,
+    default:false
 
   },
   productid:{

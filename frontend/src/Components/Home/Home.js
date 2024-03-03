@@ -4,6 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom'
 import axios from '../../Axios/Axios';
+import Courosel from '../Courosel/Courosel';
 function Home() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10); // Set the number of items per page
@@ -47,7 +48,8 @@ console.log("error");
           <button onClick={()=>navigate('/allproducts')}>Shop Now</button>
         </div>
         <div className='homerighsec'>
-
+       <Courosel/>
+{/* <img src={bannerhome} alt="" /> */}
         </div>
       </div>
       <div className='secondmainhome'>

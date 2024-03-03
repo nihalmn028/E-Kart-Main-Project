@@ -53,16 +53,16 @@ function Footer() {
         </div>
         <div className='flexcol'>
         <div className='footericons'>
-          <div>
+          <div onClick={()=>window.open("https://www.facebook.com/","_self")}>
           <i class="fa-brands fa-facebook fa-2xl"></i>
           </div>
-          <div>
+          <div onClick={()=>window.location.href="https://www.instagram.com/"}>
           <i class="fa-brands fa-square-instagram fa-2xl" ></i>   
                            </div>
-          <div>
+          <div onClick={()=>window.location.href="https://twitter.com/?lang=en"}>
           <i class="fa-brands fa-twitter fa-2xl"></i>
                     </div>
-          <div>
+          <div onClick={()=>window.location.href="https://www.youtube.com/"}>
           <i class="fa-brands fa-youtube fa-2xl"></i>
                     </div>
         </div>
