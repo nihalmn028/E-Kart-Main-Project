@@ -76,8 +76,22 @@ console.log(res.data);
   }
   function buynowbtn(e){
 e.preventDefault()
+const userid=localStorage.getItem('userId');
+const productid=localStorage.getItem('spid');
+if(userid){
 
-navigate('/allcarts')
+axios.post('/cartmanage/singlecheckout',{userid,productid,quantity:selectedQuantity}).then((res)=>{
+  navigate('/checkout')
+
+}).catch((err)=>{
+  console.log(err);
+})
+}
+else{
+  toast.error("Please Login")
+
+}
+
   }
   return (
     <div>

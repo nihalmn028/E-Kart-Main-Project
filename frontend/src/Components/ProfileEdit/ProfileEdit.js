@@ -60,7 +60,7 @@ function handleChange(event){
 }
 function handleClick(event){
 event.preventDefault()
-if(input.name==""){
+if(input.name.trim()==""){
   setData({...data,name:"Enter the Full Name"})
 ref4.current.style.borderBottom= "3px solid red";
 
@@ -73,11 +73,11 @@ else if(input.number<0){
   setData({...data,number:"Enter the correct Phone Number"})
 ref5.current.style.borderBottom= "3px solid red";
 }
- else if(input.username===""){
+ else if(input.username.trim()===""){
     setData({...data,username:"Enter the Username"})
   ref.current.style.borderBottom= "3px solid red";
   }
-    else if(input.email===""){
+    else if(input.email.trim()===""){
       setData({...data,email:"Enter the email"})
       ref2.current.style.borderBottom= "3px solid red";
     }

@@ -99,7 +99,7 @@ setSelectedProductId(data);
 {/* <p className='pdid ' key={index}> {data._id} </p> */}
 
 <p key={index} className='pdname'>{data.productname}</p>
-<p key={index} className='pdqn' >{data.quantity}</p>
+<p key={index} className='pdqn' >{data.quantity<0?0:data.quantity}</p>
 <p key={index} className='pdprice '> {data.price} </p>
 
 

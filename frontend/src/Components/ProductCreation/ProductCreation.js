@@ -67,7 +67,7 @@ const [file, setFile] = useState([])
   function handleClick(event){
   event.preventDefault()
   
-    if(input.productname===""){
+    if(input.productname.trim()===""){
       setData({...data,productname:"Enter the Product Name"})
     ref.current.style.borderBottom= "3px solid red";
     }
@@ -89,7 +89,7 @@ const [file, setFile] = useState([])
         setData({...data,price:"Enter the correct price"})
         ref2.current.style.borderBottom= "3px solid red";
       }
-      else if(input.description===""){
+      else if(input.description.trim()===""){
         setData({...data,description:"Enter the description"})
         ref3.current.style.borderBottom= "3px solid red";
       }

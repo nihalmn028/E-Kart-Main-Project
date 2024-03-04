@@ -67,8 +67,8 @@ function OrderManagement() {
                 <div className='orderuserflexicnsss'>
                   <select onChange={(event) => statuschange(event, item.userid,item.orderid)}>
                     <option value={item.status}>{item.status}</option>
-                    <option value="Shipped">Shipped</option>
-                    <option value="Delivered">Delivered</option>
+                  { item.status=="Cancelled"?"": <option value="Shipped">Shipped</option>}
+                  { item.status=="Cancelled"?"": <option value="Delivered">Delivered</option>}
                   </select>
                 </div>
               </div>

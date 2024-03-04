@@ -98,7 +98,13 @@ function confirmbtn(){
         <div className='orderaddress'>
         <h3>delivery address</h3>
         <p>{data.name} <br />{data.number}  <br />{data.email}  <br />{data.address} <br /> {data.city} <br />{data.pin}</p>
-      {data.status=="Delivered"?"":<button onClick={()=>cancelbtn(data.orderid,data.userid)}>Cancel Order</button>}  
+        {data.status=="Delivered"||data.status=="Cancelled" ?"":  <button style={{marginRight:"20px"}} onClick={()=>{
+        localStorage.setItem('userId',data.userid)
+        localStorage.setItem('orderid',data.orderid)
+        localStorage.setItem('pay','false')
+
+        navigate('/orderplace')}}>Order Details</button>  }
+      {data.status=="Delivered"||data.status=="Cancelled" ?"":<button onClick={()=>cancelbtn(data.orderid,data.userid)}>Cancel Order</button>}
         </div>
         <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-
+import favicon from '../Checkout/razorimage/favicon.png'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom'
@@ -86,7 +86,7 @@ const [coupon, setCoupon] = useState(false)
 
   event.preventDefault()
   
-  if(input.name==""){
+  if(input.name.trim()==""){
     setData({...data,name:"Enter the Full Name"})
   ref4.current.style.borderBottom= "3px solid red";
   
@@ -99,15 +99,15 @@ const [coupon, setCoupon] = useState(false)
     setData({...data,number:"Enter the correct Phone Number"})
   ref5.current.style.borderBottom= "3px solid red";
   }
-      else if(input.email===""){
+      else if(input.email.trim()===""){
         setData({...data,email:"Enter the email"})
         ref2.current.style.borderBottom= "3px solid red";
       }
-      else if(input.address===""){
+      else if(input.address.trim()===""){
         setData({...data,address:"Enter the Address"})
       ref.current.style.borderBottom= "3px solid red";
       }
-      else if(input.city===""){
+      else if(input.city.trim()===""){
         setData({...data,city:"Enter the City"})
       ref6.current.style.borderBottom= "3px solid red";
       }
@@ -144,7 +144,9 @@ const [coupon, setCoupon] = useState(false)
      amount:amount
       }).then((res)=>{
         const orderId = res.data.id;
-        localStorage.setItem('orderid',orderId) // Capture the order ID
+        localStorage.setItem('orderid',orderId) 
+        localStorage.setItem('pay','true') 
+
         setOrderid(orderId);
         const userid = localStorage.getItem('userId');
         const selectedProducts = data1.map((item, index) => ({
@@ -166,7 +168,8 @@ const [coupon, setCoupon] = useState(false)
           city: input.city,
           number: input.number,
           pin: input.pin,
-          coupon
+          coupon,
+          
         }).then((res) => {
       
           // Handle the response as needed
@@ -178,14 +181,14 @@ const [coupon, setCoupon] = useState(false)
         key,
         amount: res.data.amount,
         currency: res.data.currency,
-        name: "user",
+        name: "E-kart",
         description: "razor payment",
-        image: "https://avatars.githubusercontent.com/u/25058652?v=4",
+        image: favicon,
         order_id: res.data.id,
         callback_url:'http://localhost:3001/checkout/paymentverify',
         prefill: {
-            name: "Nihal",
-            email: "nihal@example.com",
+            name: "E-kart",
+            email: "E-kart@example.com",
             contact: "123456789"
         },
         notes: {

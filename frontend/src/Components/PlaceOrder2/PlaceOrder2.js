@@ -1,9 +1,9 @@
 
 import React, { useEffect, useState } from 'react';
-import '../PlaceOrder/PlaceOrder.css';
+import '../PlaceOrder2/PlaceOrder2.css';
 import { jsPDF } from 'jspdf';
 import axios from '../../Axios/Axios';
-function PlaceOrder() {
+function PlaceOrder2() {
  
   const [data, setData] = useState([]);
   const [data1, setData1] = useState([]);
@@ -15,13 +15,12 @@ function PlaceOrder() {
   useEffect(() => {
     const userid = localStorage.getItem('userId');
     const orderid = localStorage.getItem('orderid');
-    const pay = localStorage.getItem('pay');
 
-    axios.post('/ordermanage/allorders', { userid, orderid ,pay}).then((res) => {
+    axios.post('/ordermanage/allorders', { userid, orderid,pay }).then((res) => {
       setData(res.data);
       setData1(res.data[0].products)
       setCoupon(res.data[0].coupon)
-localStorage.setItem('pay','false')
+      localStorage.setItem('pay',false)
     }).catch((err) => {
       console.log(err);
     });
@@ -83,15 +82,15 @@ setTotal(totalPrice+60);
 
   return (
     <div>
-      <div className='ordplcmain'>
-        <div className='ordplcborder'>
-          <div className='ordplcmaintop'>
-            <div className='ordplctickdiv'>
-              <i className="fa-solid fa-check fa-2xl" style={{ color: "#ffffff" }}></i>
+      <div className='ord2plcmain'>
+        <div className='ord2plcborder'>
+          <div className='ord2plcmaintop'>
+            <div className='ord2plctickdiv'>
+              <i className='fa-2solid fa-check fa-2xl' style={{ color: "#ffffff" }}></i>
             </div>
             <h1>Your Order Has <br />Been Placed</h1>
           </div>
-          <div className='ordplcmainbottom'>
+          <div className='ord2plcmainbottom'>
             {/* Display customer details */}
             <p>Name: {data.length > 0 ? data[0].name : ""}</p>
             <p>Phone Number: {data.length > 0 ? data[0].number : ""}</p>
@@ -117,4 +116,4 @@ setTotal(totalPrice+60);
   );
 }
 
-export default PlaceOrder;
+export default PlaceOrder2;

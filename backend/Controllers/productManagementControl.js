@@ -1,5 +1,6 @@
 const productSchema=require('../Models/productSchema')
 const cartSchema=require('../Models/cartSchema')
+const checkoutschema=require('../Models/checkoutschema')
 
 
 
@@ -28,6 +29,8 @@ try{
 
 const product= await productSchema.findOne({_id:id})
 const cart=await cartSchema.findOne({productid:id})
+const checkout=await checkoutschema.findOne({productid:id})
+
 
 if (!product)
 return res.status(401).json({message:"Error"})
@@ -35,7 +38,8 @@ return res.status(401).json({message:"Error"})
 await productSchema.findOneAndDelete({_id:product._id})
 if(cart){
 await cartSchema.findOneAndUpdate({_id:cart._id},{quantity:0},{new:true})}
-
+if(checkout){
+  await checkoutschema.findOneAndUpdate({_id:checkout._id},{quantity:0},{new:true})}
 res.status(200).json({message:"Product Deleted Successfully"})
 }
 catch(error){

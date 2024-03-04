@@ -1,6 +1,6 @@
 const orderSchema=require('../Models/orderSchema')
 const paymentSchema=require('../Models/paymentSchema')
-
+const productSchema=require("../Models/productSchema")
 // const orderManageControl = async (req, res) => {
 //   try {
 //     const selectedProducts = req.body.selectedProducts;
@@ -86,27 +86,83 @@ const orderManageControl = async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
-const allOrdersControl=async (req,res)=>{
-try {
-  const {userid,orderid}=req.body
-  if (!userid) 
-  return   res.status(401).json({ message: 'Internal server error' });
-const order1=await orderSchema.find({userid,orderid})
-if(!order1)
-return     res.status(401).json({ message: 'Internal server error' });
-const payment=await paymentSchema.findOne({razorpay_order_id:orderid})
-if(!payment)
-return     res.status(401).json({ message: 'Internal server error' });
-if (payment) {
-  await orderSchema.updateMany({ userid, orderid }, { $set: { order: true } });
-}
-res.status(200).json(order1);
+// const allOrdersControl=async (req,res)=>{
+// try {
+//   const {userid,orderid,pay}=req.body
+//   if (!userid) 
+//   return   res.status(401).json({ message: 'Internal server error' });
+// const order1=await orderSchema.find({userid,orderid})
+// if(!order1)
+// return     res.status(401).json({ message: 'Internal server error' });
+// const payment=await paymentSchema.findOne({razorpay_order_id:orderid})
+// if(!payment)
+// return     res.status(401).json({ message: 'Internal server error' });
+// if (payment) {
+//   await orderSchema.updateMany({ userid, orderid }, { $set: { order: true } });
+  
+//   order1.forEach(async order => {
+//     order.products.forEach(async product => {
+      
+//         await productSchema.updateOne(
+//           { _id: product.productid },
+//           { $inc: { quantity: -(product.quantity/2) } } 
+//         );
+//       })
+//     })
+//     res.status(200).json(order1);
 
-} catch (error) {
-     res.status(401).json({ message: 'Internal server error' });
+// }
 
-}
-}
+
+
+// } catch (error) {
+//      res.status(401).json({ message: 'Internal server error' });
+
+// }
+// }
+const allOrdersControl = async (req, res) => {
+  try {
+    const { userid, orderid, pay } = req.body;
+    if (!userid) {
+      return res.status(400).json({ message: 'Invalid user ID' });
+    }
+
+    const order1 = await orderSchema.find({ userid, orderid });
+
+    if (!order1) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+
+    const payment = await paymentSchema.findOne({ razorpay_order_id: orderid });
+
+    if (!payment) {
+      return res.status(404).json({ message: 'Payment not found' });
+    }
+
+    if (pay==='true') {
+      
+      await orderSchema.updateMany({ userid, orderid }, { $set: { order: true } });
+
+      order1.forEach(async (order) => {
+        order.products.forEach(async (product) => {
+          await productSchema.updateOne(
+            { _id: product.productid },
+            { $inc: { quantity: -(product.quantity / 2) } }
+          );
+        });
+      });
+
+      res.status(200).json(order1);
+    } else {
+      // Handle case when pay is false (quantity should not increment)
+      res.status(200).json(order1);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
 const ordersListControl=async (req,res)=>{
 const {userid}=req.body;
 try {
@@ -149,7 +205,7 @@ const cancelOrderControl=async (req,res)=>{
     const order=await orderSchema.findOne({userid,orderid,order:true});
     if (!order)
     return     res.status(401).json({ message: 'Internal server error' });
-    await orderSchema.findOneAndDelete({_id:order._id})
+    await orderSchema.findOneAndUpdate({_id:order._id},{status:"Cancelled"},{new:true})
     res.status(200).json({success:true});
 
   } catch (error) {

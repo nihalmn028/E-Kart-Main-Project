@@ -7,6 +7,7 @@ const addtoCart=async (req,res)=>{
 
     const {userId,spid,quantity}=req.body
     try {
+      
 const cart=await cartSchema.findOne({userid:userId,productid:spid})
 const products=await productSchema.findOne({_id:spid})
 if(!products)
@@ -38,7 +39,45 @@ res.status(200).json({message:'success'})}
 
   
 }
+const singleCheckoutControl=async (req,res)=>{
 
+  const {userid,productid,quantity}=req.body
+  try {
+  const deletecheckout=  await checkoutschema.findOne({userid:userid})
+    if(deletecheckout){
+      await checkoutschema.deleteMany({userid:userid})
+    }
+const checkout=await checkoutschema.findOne({userid:userid,productid})
+const products=await productSchema.findOne({_id:productid})
+if(!products)
+return res.status(401).json({message:'error'})
+if(checkout){
+await checkoutschema.findOneAndUpdate({_id:checkout._id},{userid:userid,productid,productname:products.productname,price:products.price,quantity:quantity,image:products.image1},{new:true})
+
+res.status(200).json({message:'exist'})
+}
+
+
+else{
+await checkoutschema.create({userid:userid,productid,productname:products.productname,price:products.price,quantity:quantity,image:products.image1})
+
+res.status(200).json({message:'success'})}
+
+
+
+
+
+
+
+//  res.status(200).json({message:'success'})
+} catch (error) {
+   res.status(401).json({message:'error'})
+   console.log(error);
+
+}
+
+
+}
 const allCarts=async (req,res)=>{
   try {
     const userId=req.params.id
@@ -64,7 +103,12 @@ const allCarts=async (req,res)=>{
 const checkoutadd = async (req, res) => {
   try {
     const selectedProducts = req.body.selectedProducts;
-
+    let userid
+    const selectedProducts1 = selectedProducts.length > 0 ? selectedProducts[0].userid : null;
+    const deletecheckout=  await checkoutschema.find({userid:selectedProducts1})
+    if(deletecheckout){
+      await checkoutschema.deleteMany({userid:userid})
+    }
     // Use map to create an array of promises for updating or adding products to checkout schema
     const savePromises = selectedProducts.map(async (product) => {
       const filter = {
@@ -148,4 +192,4 @@ else{
   res.status(401).json({success:false})
 }
 }
-module.exports={addtoCart,couponControl,allCarts,deleteCart,checkoutadd,checkoutView}
+module.exports={addtoCart,couponControl,allCarts,deleteCart,singleCheckoutControl,checkoutadd,checkoutView}

@@ -27,11 +27,11 @@ const ref2 = useRef()
   }
   function handleClick(event){
   event.preventDefault() 
-  if(input.username===""){
+  if(input.username.trim()===""){
     setData({...data,username:"Enter the Username"})
   ref.current.style.borderBottom= "3px solid red";
   }
-    else if(input.password===""){
+    else if(input.password.trim()===""){
       setData({...data,password:"Enter the password"})
       ref2.current.style.borderBottom= "3px solid red";
     }
