@@ -10,6 +10,13 @@ width: fit-content;
 margin-top: 40px;
 opacity: 1;
 }
+.orderusermaindivproductop{
+  padding: 10px;
+margin: auto;
+width: fit-content;
+margin-top: 40px;
+opacity: .3;
+}
 .orderopahlf{
   
     padding: 10px;
@@ -27,13 +34,13 @@ padding-bottom: 10px;
 align-items: center;
 }
 .orderuserheadprodusername{
- width: 270px;
+ width: 220px;
 }
 .orderuserheadqua{
-  width: 270px;
+  width: 220px;
 }
 .orderuserheadpr{
-  width: 270px;
+  width: 220px;
 }
 .orderuseraddsec{
   font-size: 35px;
@@ -93,14 +100,14 @@ transition: .2s;} */
   font-size: 16px;
   font-weight: bold;
   margin-top: 10px;
-  width: 270px;
+  width: 220px;
 }
 
 .orderuserpdprice{
 font-weight: bold;
 font-size: 16px;
 margin-top: 13px;
-  width: 180px;
+  width: 220px;
 }
 .orderuserflexicnsss select{
   border: 2px solid orange;
@@ -110,4 +117,8 @@ margin-top: 13px;
 }
 .orderuserflexicnsss select{
   outline: none;
+}
+.orderdtliccn:hover{
+  cursor: pointer;
+  scale: 1.03;
 }

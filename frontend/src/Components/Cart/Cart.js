@@ -101,6 +101,7 @@ function Cart() {
       productid:item.productid,
       price: item.price,
       image:item.image,
+      category: item.category,
       quantity: selectedQuantity[index],
       coupon,
       userid

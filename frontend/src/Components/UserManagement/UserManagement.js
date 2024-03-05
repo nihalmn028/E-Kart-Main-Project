@@ -17,7 +17,6 @@ function UserManagement() {
     axios.get("/usermanagement/getusers").then((res)=>{
       const reversedData = res.data.reverse();
             
-            // Set the reversed data in the state
             setData(reversedData);
           })
           .catch(()=>{
@@ -44,7 +43,7 @@ setSelectedUserId(data);
           console.log("error");
         });
     }
-    setConf(false); // Hide confirmation dialog
+    setConf(false); 
   }
   
   return (  
@@ -57,7 +56,6 @@ setSelectedUserId(data);
 <h3 className='userheadqua'> Email</h3>
 <h3 className='userheadpr'>Phone No</h3>
 <h3 className='userheadaction'>Action</h3>
-{/* <h3 className='useraddsec' onClick={()=>navigate('/addproduct')}>+</h3> */}
 
 
     

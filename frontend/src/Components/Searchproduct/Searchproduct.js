@@ -9,7 +9,9 @@ function Searchproduct() {
   const navigate=useNavigate()
   useEffect(() => {
     const search=localStorage.getItem('search')
-      axios.get('/productmanagement/search/' + search)
+    const search1=localStorage.getItem('search1')
+
+      axios.post('/productmanagement/search' ,{key1:search, key2:search1})
         .then((res) => {
           setData(res.data);
         })

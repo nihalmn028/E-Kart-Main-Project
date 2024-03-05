@@ -10,6 +10,8 @@ const [data1, setData1] = useState([])
 const [key, setKey] = useState("")
 const [datas, setDatas] = useState()
 const [subtotal, setSubtotal] = useState(0)
+const [total, setTotal] = useState(0)
+
 const [orderid, setOrderid] = useState("")
 const [coupon, setCoupon] = useState(false)
 
@@ -26,7 +28,10 @@ const [coupon, setCoupon] = useState(false)
         }, 0);
 
         setSubtotal(total);
-       
+       if(coupon)
+       setTotal(subtotal+60-1000)
+      else
+      setTotal(subtotal+60)
       })
       .catch(() => {
         console.log("error");
@@ -48,7 +53,7 @@ const [coupon, setCoupon] = useState(false)
           };
         }
    
-  }, []);
+  }, [subtotal]);
     const navigate=useNavigate()
     const [input, setInput] = useState({
       address:"",
@@ -129,17 +134,18 @@ const [coupon, setCoupon] = useState(false)
       ref6.current.style.borderBottom= "2px solid orange";
 
       ref7.current.style.borderBottom= "2px solid orange";
-
+// console.log(total/100);
       axios.get('/checkout/getkey').then((res)=>{
         setKey(res.data.key);
       
        }).catch(()=>{
         console.log("error");
        })
-       if(coupon) 
-      var  amount=(subtotal+60-1000)*100
-       else
+       if(coupon) {
+      var  amount=(subtotal+60-1000)*100}
+       else{
        amount=(subtotal+60)*100
+      }
        axios.post('/checkout/payment', {
      amount:amount
       }).then((res)=>{
@@ -155,9 +161,11 @@ const [coupon, setCoupon] = useState(false)
           price: item.price,
           image: item.image,
           quantity: item.quantity,
+          category: item.category,
         }));
       
         // Now, proceed with the addorder API call
+    
         axios.post('/ordermanage/addorder', {
           selectedProducts,
           userid,
@@ -169,6 +177,7 @@ const [coupon, setCoupon] = useState(false)
           number: input.number,
           pin: input.pin,
           coupon,
+          total:total
           
         }).then((res) => {
       

@@ -9,6 +9,9 @@ const cartSchema=mongoose.Schema({
     type:Number,
     required:true,
   },
+  category:{
+    type:String
+  },
   userid:{
     type:String,
     required:true,

@@ -122,6 +122,10 @@ const orderSchema = mongoose.Schema({
     type: Number,
     required: true,
   },
+  total: {
+    type: Number,
+   
+  },
   coupon: {
     type: Boolean,
     default: false,
@@ -143,6 +147,9 @@ const orderSchema = mongoose.Schema({
       price: {
         type: Number,
         required: true,
+      },
+      category:{
+        type:String
       },
       image: {
         type: String,

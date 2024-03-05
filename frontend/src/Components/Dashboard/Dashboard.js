@@ -13,6 +13,8 @@ function Dashboard(props) {
   <h2>Dashboard</h2>
 </div>
 {/* <div className='dashsubdiv'> */}
+<div className='dashsect mt20' onClick={()=>navigate('/overview')}>Overview
+</div>
   <div className='dashsect mt20' onClick={()=>navigate('/usermanagement')}>User Management
 </div>
 <div className='dashsect' onClick={()=>navigate('/productmanagement')}>Product Management

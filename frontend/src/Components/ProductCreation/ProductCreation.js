@@ -211,7 +211,7 @@ const handleFileChange = (event) => {
   {previewImages.map((previewUrl, index) => (
     <img key={index} src={previewUrl} alt={`Preview ${index + 1}`} style={{ maxWidth: '100px', maxHeight: '100px', marginTop: '40px' }} />
   ))}
-</div>
+</div>  
 
       
 <div className='pdcrmgtop'>

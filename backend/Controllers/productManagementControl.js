@@ -124,10 +124,11 @@ const viewProduct=async (req,res)=>{
 const searchProduct= async (req,res)=>{
 
   try{
-    const {keyword}=req.params
+    const {key1,key2}=req.body
+if(key2=="All"){
     const result =await  productSchema.find({
       $or:[
-        {productname:{$regex:keyword,$options:"i"}}
+        {productname:{$regex:key1,$options:"i"}}
       ]
       })
       if(result.length===0){
@@ -135,7 +136,17 @@ const searchProduct= async (req,res)=>{
       }
       res.status(200).json(result)
       // console.log(result);
-
+    }else{
+      const result =await  productSchema.find({
+        $or:[
+          {productname:{$regex:key1,$options:"i"}}
+        ]
+        ,category:key2})
+        if(result.length===0){
+          return res.status(401).json({message:"no found"})
+        }
+        res.status(200).json(result)
+    }
 } catch (error) {
   console.log(error);
   return res.status(401).json({message:"Error"})

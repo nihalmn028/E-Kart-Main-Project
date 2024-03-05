@@ -14,6 +14,9 @@ const checkoutschema=mongoose.Schema({
     required:true,
 
   },
+  category:{
+    type:String
+  },
   productname:{
     type:String,
     required:true,

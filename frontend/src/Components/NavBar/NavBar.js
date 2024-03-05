@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../NavBar/NavBar.css'
 import logoEkart from '../NavBar/NavImages/LOGO  ekart.png'
 import { Link } from 'react-router-dom'
@@ -13,6 +13,12 @@ function NavBar(props) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [dashbarOpen, setdashbarOpen] = useState(false);
   const [search, setSearch] = useState();
+  const [search1, setSearch1] = useState("All");
+useEffect(() => {
+  localStorage.setItem('search1',search1)
+
+}, [])
+
 function handleSearch(event){
 setSearch(event.target.value)
 }
@@ -23,6 +29,8 @@ setSearch(event.target.value)
 
 
 localStorage.setItem('search',search)
+localStorage.setItem('search1',search1)
+
 setSearch("")
   navigate('/searchproduct')
 
@@ -79,7 +87,17 @@ setSearch("")
       <div className='navmain'>
         <img src={logoEkart} alt="" className='logonav' onClick={logoclknav} />
         <div className='searchdiv'>
-          <input type="text"  placeholder='Enter The Name Of Product...' className='seachbarnav'  onChange={handleSearch} value={search} />
+<select name="" id="" style={{padding:"2px",border:"2px solid orange",backgroundColor:"black",color:"white",outline:"none"}} onChange={(event)=>setSearch1(event.target.value)}>
+  <option value="All">All</option>
+  <option value="Mobile">Mobile</option>
+  <option value="Laptop">Laptop</option>
+  <option value="Watch">Watch</option>
+  <option value="Headphone">Headphone</option>
+  <option value="Tablet">Tablet</option>
+
+
+  </select>         
+ <input type="text"  placeholder='Enter The Name Of Product...' className='seachbarnav'  onChange={handleSearch} value={search} />
           <div className='searchiconnav' onClick={searchclick}>
             <i class="fa-solid fa-magnifying-glass fa-lg"></i>
           </div>

@@ -73,7 +73,8 @@ function AllProducts() {
   useEffect(() => {
     axios.get('/productmanagement/allproducts')
       .then((res) => {
-        setData(res.data);
+        const revdata=res.data.reverse()
+        setData(revdata);
       })
       .catch(() => {
         console.log("error");
@@ -121,7 +122,7 @@ function AllProducts() {
                 <i className="fa-solid fa-star" style={{ color: "orange" }}></i>
                 <i className="fa-solid fa-star" style={{ color: "orange" }}></i>
               </div>
-              <h5>{data.price}</h5>
+              <h5>₹{data.price}</h5>
               <p className={data.quantity>0 ?"stockavlallp" :"stocknoavlallp" }>{data.quantity>0 ?"In stock" :"Out Of Stock"}</p>
 
             </div>

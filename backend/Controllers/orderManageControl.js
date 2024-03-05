@@ -1,3 +1,4 @@
+const cartSchema = require('../Models/cartSchema');
 const orderSchema=require('../Models/orderSchema')
 const paymentSchema=require('../Models/paymentSchema')
 const productSchema=require("../Models/productSchema")
@@ -58,7 +59,8 @@ const orderManageControl = async (req, res) => {
     const city = req.body.city;
     const number = req.body.number;
     const coupon = req.body.coupon;
-
+    const total = req.body.total;
+// console.log(total);
     const newOrder = {
       userid,
       orderid,
@@ -69,11 +71,13 @@ const orderManageControl = async (req, res) => {
       city,
       number,
       coupon,
+      total,
       products: selectedProducts.map(product => ({
         productname: product.productName,
         productid: product.productid,
         quantity: product.quantity,
         price: product.price,
+        category: product.category,
         image: product.image,
       })),
     };
@@ -151,6 +155,14 @@ const allOrdersControl = async (req, res) => {
           );
         });
       });
+      order1.forEach(async (order) => {
+        order.products.forEach(async (product) => {
+          await cartSchema.updateOne(
+            { productid: product.productid },
+            { $inc: { quantity: -(product.quantity / 2) } }
+          );
+        });
+      });
 
       res.status(200).json(order1);
     } else {
@@ -212,4 +224,34 @@ const cancelOrderControl=async (req,res)=>{
     res.status(401).json({ message: 'Internal server error' });
   }
 }
-module.exports = { orderManageControl,cancelOrderControl ,allOrdersControl,ordersListControl,orderViewControl,statusChangeControl};
+const overviewControl=async (req,res)=>{
+  try {
+   const order= await orderSchema.find({order:true,status:"Delivered"})
+   if (!order)
+   return     res.status(401).json({ message: 'Internal server error' });
+   res.status(200).json(order);
+
+  } catch (error) {
+    res.status(401).json({ message: 'Internal server error' });
+
+  }
+}
+const deleteorderControl=async (req,res)=> {
+  const id=req.params.id
+
+try{
+
+const order= await orderSchema.findOne({orderid:id})
+if (!order)
+return res.status(401).json({message:"Error"})
+
+await orderSchema.findOneAndDelete({_id:order._id})
+res.status(200).json({message:"User Deleted Successfully"})
+}
+catch(error){
+   res.status(401).json({message:"error"})
+  //  console.log(error);
+
+}
+}
+module.exports = { orderManageControl,overviewControl,deleteorderControl,cancelOrderControl ,allOrdersControl,ordersListControl,orderViewControl,statusChangeControl};

@@ -13,14 +13,14 @@ const products=await productSchema.findOne({_id:spid})
 if(!products)
   return res.status(401).json({message:'error'})
 if(cart){
-await cartSchema.findOneAndUpdate({_id:cart._id},{userid:userId,productid:spid,productname:products.productname,price:products.price,quantity:products.quantity,image:products.image1,selectedquantity:quantity},{new:true})
+await cartSchema.findOneAndUpdate({_id:cart._id},{userid:userId,productid:spid,productname:products.productname,price:products.price,quantity:products.quantity,image:products.image1,category:products.category,selectedquantity:quantity},{new:true})
 
 res.status(200).json({message:'exist'})
 }
 
 
 else{
-  await cartSchema.create({userid:userId,productid:spid,productname:products.productname,price:products.price,quantity:products.quantity,image:products.image1,selectedquantity:quantity})
+  await cartSchema.create({userid:userId,productid:spid,productname:products.productname,price:products.price,quantity:products.quantity,image:products.image1,category:products.category,selectedquantity:quantity})
 
 res.status(200).json({message:'success'})}
 
@@ -121,6 +121,7 @@ const checkoutadd = async (req, res) => {
         price: product.price,
         quantity: product.quantity,
         image: product.image,
+        category: product.category,
         productid: product.productid,
         coupon: product.coupon,
         userid:product.userid
