@@ -28,7 +28,7 @@ const deleteProduct=async (req,res)=> {
 try{
 
 const product= await productSchema.findOne({_id:id})
-const cart=await cartSchema.findOne({productid:id})
+const cart=await cartSchema.find({productid:id})
 const checkout=await checkoutschema.findOne({productid:id})
 
 
@@ -37,7 +37,7 @@ return res.status(401).json({message:"Error"})
 
 await productSchema.findOneAndDelete({_id:product._id})
 if(cart){
-await cartSchema.findOneAndUpdate({_id:cart._id},{quantity:0},{new:true})}
+await cartSchema.updateMany({productid:id},{$set:{quantity:0}})}
 if(checkout){
   await checkoutschema.findOneAndUpdate({_id:checkout._id},{quantity:0},{new:true})}
 res.status(200).json({message:"Product Deleted Successfully"})
@@ -61,7 +61,7 @@ const updateProduct=async (req,res)=>{
   const productid=req.body.productid
 
   const product=await productSchema.findOne({_id:productid})
-  const cart=await cartSchema.findOne({productid:productid})
+  const cart=await cartSchema.find({productid:productid})
   
 
 
@@ -72,7 +72,7 @@ const updateProduct=async (req,res)=>{
   }
 await productSchema.findOneAndUpdate({_id:product._id},{productname,image1,image2,image3,description,price,quantity,category},{new:true})
 if(cart){
-await cartSchema.findOneAndUpdate({_id:cart._id},{productname,image:image1,price,quantity},{new:true})}
+await cartSchema.updateMany({productid:productid},{$set:{productname,image:image1,price,quantity}})}
 
 res.status(200).json({message:"Product Updated Successfully"}) 
 

@@ -74,7 +74,7 @@ const orderManageControl = async (req, res) => {
       total,
       products: selectedProducts.map(product => ({
         productname: product.productName,
-        productid: product.productid,
+        productid: product.productid, 
         quantity: product.quantity,
         price: product.price,
         category: product.category,
@@ -157,7 +157,7 @@ const allOrdersControl = async (req, res) => {
       });
       order1.forEach(async (order) => {
         order.products.forEach(async (product) => {
-          await cartSchema.updateOne(
+          await cartSchema.updateMany(
             { productid: product.productid },
             { $inc: { quantity: -(product.quantity / 2) } }
           );

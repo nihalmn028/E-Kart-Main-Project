@@ -6,7 +6,7 @@ require('dotenv')
 const bcrypt=require('bcrypt')
 const emailVerify=async(req,res)=>{
 const {email}=req.body;
-const user=await userschema.findOne({email})
+const user=await userschema.findOne({email,isadmin:false})
 if(!user)
  return res.status(401).json({message:"User not found"})
  const otp=Math.floor(1000+ Math.random()*9000);

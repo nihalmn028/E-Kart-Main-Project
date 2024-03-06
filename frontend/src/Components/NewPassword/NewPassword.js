@@ -11,7 +11,7 @@ function NewPassword() {
   const ref2=useRef()
 
   const navigate=useNavigate()
-  const [input, setInput] = useState({
+  const [input, setInput] = useState({ 
     password:"",
     confirmpass:""
   })
@@ -26,11 +26,11 @@ setInput({...input,[name]: value})
   function handleclk(e){
     e.preventDefault();
 
-if(input.password===""){
+if(input.password.trim()===""){
     setData({...data,password:"Enter the password"})
   ref.current.style.border= "3px solid red";
   }
-    else if(input.confirmpass===""){
+    else if(input.confirmpass.trim()===""){
       setData({...data,confirmpass:"Enter the confirm password"})
       ref2.current.style.border= "3px solid red";
     }

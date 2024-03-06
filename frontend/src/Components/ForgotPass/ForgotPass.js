@@ -16,7 +16,7 @@ const ref=useRef()
 setInput(event.target.value)
   }
   function handleclk(){
-    if(input===""){
+    if(input.trim()===""){
     setData("Enter the email")
     ref.current.style.border= "3px solid red";
 

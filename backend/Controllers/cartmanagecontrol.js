@@ -43,25 +43,25 @@ const singleCheckoutControl=async (req,res)=>{
 
   const {userid,productid,quantity}=req.body
   try {
-  const deletecheckout=  await checkoutschema.findOne({userid:userid})
+  const deletecheckout=  await checkoutschema.find()
     if(deletecheckout){
-      await checkoutschema.deleteMany({userid:userid})
+      await checkoutschema.deleteMany({userid})
     }
-const checkout=await checkoutschema.findOne({userid:userid,productid})
+// const checkout=await checkoutschema.findOne({userid:userid,productid})
 const products=await productSchema.findOne({_id:productid})
 if(!products)
 return res.status(401).json({message:'error'})
-if(checkout){
-await checkoutschema.findOneAndUpdate({_id:checkout._id},{userid:userid,productid,productname:products.productname,price:products.price,category:products.category,quantity:quantity,image:products.image1},{new:true})
+// if(checkout){
+// await checkoutschema.findOneAndUpdate({_id:checkout._id},{userid:userid,productid,productname:products.productname,price:products.price,category:products.category,quantity:quantity,image:products.image1},{new:true})
 
-res.status(200).json({message:'exist'})
-}
+// res.status(200).json({message:'exist'})
+// }
  
 
-else{
+// else{
 await checkoutschema.create({userid:userid,productid,productname:products.productname,price:products.price,quantity:quantity,category:products.category,image:products.image1})
 
-res.status(200).json({message:'success'})}
+res.status(200).json({message:'success'})
 
 
 
@@ -103,6 +103,11 @@ const allCarts=async (req,res)=>{
 const checkoutadd = async (req, res) => {
   try {
     const selectedProducts = req.body.selectedProducts;
+    const deletecheckout1=  await checkoutschema.find()
+    if(deletecheckout1){
+      await checkoutschema.deleteMany({userid:selectedProducts[0].userid})
+    }
+    // console.log(selectedProducts);
     let userid
     const selectedProducts1 = selectedProducts.length > 0 ? selectedProducts[0].userid : null;
     const deletecheckout=  await checkoutschema.find({userid:selectedProducts1})

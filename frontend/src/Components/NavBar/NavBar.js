@@ -12,7 +12,7 @@ function NavBar(props) {
   const navigate = useNavigate()
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [dashbarOpen, setdashbarOpen] = useState(false);
-  const [search, setSearch] = useState();
+  const [search, setSearch] = useState("");
   const [search1, setSearch1] = useState("All");
 useEffect(() => {
   localStorage.setItem('search1',search1)
