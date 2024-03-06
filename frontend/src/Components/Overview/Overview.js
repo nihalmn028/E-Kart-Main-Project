@@ -63,7 +63,7 @@ function Overview() {
         labels:['Mobile', 'Laptop', 'Headphone', 'Tablet', 'Watch'],
         datasets:[
           {
-            label: 'Monthly Revenue',
+            label: 'Total Revenue',
             data: [productRevenue.Mobile, productRevenue.Laptop, productRevenue.Headphone, productRevenue.Tablet, productRevenue.Watch],
             backgroundColor: [
               'rgba(255, 99, 132, 0.7)',

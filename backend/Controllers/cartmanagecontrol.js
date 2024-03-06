@@ -52,14 +52,14 @@ const products=await productSchema.findOne({_id:productid})
 if(!products)
 return res.status(401).json({message:'error'})
 if(checkout){
-await checkoutschema.findOneAndUpdate({_id:checkout._id},{userid:userid,productid,productname:products.productname,price:products.price,quantity:quantity,image:products.image1},{new:true})
+await checkoutschema.findOneAndUpdate({_id:checkout._id},{userid:userid,productid,productname:products.productname,price:products.price,category:products.category,quantity:quantity,image:products.image1},{new:true})
 
 res.status(200).json({message:'exist'})
 }
-
+ 
 
 else{
-await checkoutschema.create({userid:userid,productid,productname:products.productname,price:products.price,quantity:quantity,image:products.image1})
+await checkoutschema.create({userid:userid,productid,productname:products.productname,price:products.price,quantity:quantity,category:products.category,image:products.image1})
 
 res.status(200).json({message:'success'})}
 

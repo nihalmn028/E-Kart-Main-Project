@@ -157,9 +157,20 @@ const handleFileChange = (event) => {
   setFile(Array.from(selectedFiles));
  
   // Generate preview images
+
   const imagePreviews = Array.from(selectedFiles).map(file => URL.createObjectURL(file));
   setPreviewImages(imagePreviews);
 };
+// useEffect(() => {
+//   // Generate preview images
+//   const imagePreviews = file.map(file => URL.createObjectURL(file));
+//   setPreviewImages(imagePreviews);
+
+//   // Cleanup function to revoke object URLs when component unmounts or when files change
+//   return () => {
+//     imagePreviews.forEach(URL.revokeObjectURL);
+//   };
+// }, [file]);
 // const handleFileChange = (event) => {
 //   setPreviewImages([]);
 
