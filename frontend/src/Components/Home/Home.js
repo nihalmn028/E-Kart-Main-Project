@@ -45,7 +45,7 @@ console.log("error");
       <div className='maindivhome'>
         <div className='homeleftsec'>
           <h1 >Our Best <br />Collections <br />For You</h1>
-          <p>The different styles of electronic devices available to consumers <br />are endless and profit also endless</p>
+          <p>The different types of electronic devices available to consumers <br />are endless and profit also endless</p>
           <button onClick={()=>navigate('/allproducts')}>Shop Now</button>
         </div>
         <div className='homerighsec'>

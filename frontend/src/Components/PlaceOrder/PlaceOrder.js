@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import '../PlaceOrder/PlaceOrder.css';
 import { jsPDF } from 'jspdf';
+import 'jspdf-autotable';
+
 import axios from '../../Axios/Axios';
 function PlaceOrder() {
  
@@ -40,45 +42,56 @@ setTotal(totalPrice+60);
 
   }, [data]); // Watch for changes in the 'data' array
 
-  const downloadPDF = (e) => {
-   
-// ... (previous code)
 
-
+const downloadPDF = (e) => {
   e.preventDefault();
   const pdf = new jsPDF();
+  const lineHeight = 10;
 
-  pdf.text('Order Details', 20, 10);
-  pdf.text('--------------------------', 20, 20);
+  // Invoice Header
+  pdf.setFontSize(18);
+  pdf.text('Invoice', 20, 10);
 
-  // Display customer details (only once)
-  pdf.text(`Name: ${data.length > 0 ? data[0].name : ""}`, 20, 30);
-  pdf.text(`Phone Number: ${data.length > 0 ? data[0].number : ""}`, 20, 40);
-  pdf.text(`Order Id: ${data.length > 0 ? data[0].orderid : ""}`, 20, 50);
+  // Customer Information
+  pdf.setFontSize(12);
+  pdf.text('Customer Details:', 20, 30);
+  pdf.text(`Name: ${data.length > 0 ? data[0].name : ""}`, 20, 40);
+  pdf.text(`Phone Number: ${data.length > 0 ? data[0].number : ""}`, 20, 50);
+  pdf.text(`Order Id: ${data.length > 0 ? data[0].orderid : ""}`, 20, 60);
+  // pdf.text(` Delivery Address: ${data.length > 0 ? data[0].address : ""},${data.length > 0 ? data[0].city : ""},${data.length > 0 ? data[0].pin : ""}`, 20, 70);
+  const addressText = `Delivery Address: ${data.length > 0 ? data[0].address : ""}, ${data.length > 0 ? data[0].city : ""}, ${data.length > 0 ? data[0].pin : ""}`;
+  const addressLines = pdf.splitTextToSize(addressText, pdf.internal.pageSize.width - 40);
+  pdf.text(addressLines, 20, 70);
 
-  let yPosition = 70; // Adjust the Y position for product details
 
-  // Display product details using map
-  data1.forEach((order) => {
-    pdf.text(`Product: ${order.productname} x${order.quantity}`, 20, yPosition);
-    pdf.text(`Price: ${order.price * order.quantity}`, 20, yPosition + 10);
+  // Invoice Table
+  const headers = [['Product Name', 'Quantity', 'Price']];
+  const rows = data1.map((order) => [order.productname, order.quantity, `${order.price * order.quantity}`]);
 
-    yPosition += 30; // Adjust the Y position for the next set of product details
+  pdf.autoTable({
+    startY: 80,
+    head: headers,
+    body: rows,
+    theme: 'grid',
   });
 
-  // Display total price
+  // Invoice Summary
+  const summaryY = pdf.autoTable.previous.finalY + lineHeight * 2;
+  pdf.text(`Shipping Fee: 60`, 20, summaryY);
+  if (coupon) {
+    pdf.text(`Coupon Discount: -₹1000`, 20, summaryY + lineHeight);
+  }
 
-  pdf.text("Shipping Fee:60", 20, yPosition);
- {coupon? pdf.text("Coupon Discount:1000", 20, yPosition+10):pdf.text("", 20, yPosition)}
- {coupon?pdf.text(`Total Price:${total}`, 20, yPosition+20):pdf.text(`Total Price:${total}`, 20, yPosition+10)}
+  pdf.setFont('bold');
+  const totalPriceY = summaryY + (coupon ? lineHeight * 2 : lineHeight);
+  pdf.text(`Total Price: ${total}`, 20, totalPriceY);
+  pdf.setFont('normal');
 
-
-  pdf.save('order_details.pdf');
-
-
-// ... (rest of the code)
-
+  // Save PDF
+  pdf.save('invoice.pdf');
 };
+
+
 
 
   return (
