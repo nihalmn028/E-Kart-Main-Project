@@ -273,7 +273,7 @@ const [coupon, setCoupon] = useState(false)
           <img src={'http://localhost:3001/images/'+ data1.image} alt="" onClick={() => {
                   localStorage.setItem('spid',data1.productid)
                   navigate('/singleproduct')}}/>
-          <h3 style={{width:"300px"}} key={index}>{data1.productname}</h3>
+          <h3 style={{width:"300px",marginLeft:"20px"}} key={index}>{data1.productname}</h3>
           <h3 style={{width:"150px"}} key={index}>qty:{data1.quantity}</h3>
           <h3 key={index}>₹{data1.price*data1.quantity}</h3>
 
