@@ -18,7 +18,37 @@ useEffect(() => {
   localStorage.setItem('search1',search1)
 
 }, [])
+useEffect(() => {
+  function handleStorageChange(event) {
+    if (event.key === 'token' && !event.newValue) {
+// Logout logic here
+toast.success("Logout Successfull");
+localStorage.removeItem('token');
+localStorage.removeItem('userId');
+localStorage.removeItem('orderid');
+localStorage.removeItem('pay');
 
+const isadminn = localStorage.getItem('admin');
+if (isadminn) {
+  localStorage.removeItem('admin');
+}
+
+setTimeout(() => {
+  navigate('/login');
+}, 1200);
+      toast.success("Logout Successfull");
+      navigate('/login');
+    }
+  }
+
+  // Add event listener for storage change
+  window.addEventListener('storage', handleStorageChange);
+
+  return () => {
+    // Remove event listener when component unmounts
+    window.removeEventListener('storage', handleStorageChange);
+  };
+}, [navigate]);
 function handleSearch(event){
 setSearch(event.target.value)
 }
