@@ -93,8 +93,8 @@ const allProducts=async(req,res)=>{
   }  
   
 }
-const singleProduct=async (req,res)=>{
-  const {spid}=req.body
+const singleProduct=async (req,res)=>{ 
+  const {spid}=req.body 
   
   const product= await productSchema.findOne({_id:spid})
   try{
@@ -108,7 +108,7 @@ const singleProduct=async (req,res)=>{
   }
 }
 const viewProduct=async (req,res)=>{
-  const {productid}=req.body
+  const {productid}=req.body 
   
   const product= await productSchema.findOne({_id:productid})
   try{
