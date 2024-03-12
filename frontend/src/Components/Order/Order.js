@@ -66,7 +66,7 @@ function confirmbtn(){
             <div style={{display:"flex",alignItems:"center",flexWrap:"wrap",gap: "200px"}}>
             <div className='ordersectopflexsect'>
             <h3>Order Status</h3> 
-          <h4>{data.status}</h4>
+         { data.status=="Delivered" ?<h4 style={{color:"green"}}>{data.status}</h4>:data.status=="Cancelled"? <h4 style={{color:"red"}}>{data.status}</h4>: data.status=="Shipped"?<h4 style={{color:"orange"}}>{data.status}</h4> :<h4>{data.status}</h4>}
             </div>
             <div className='ordersectopflexsect'>
             <h3>Total Price</h3> 
